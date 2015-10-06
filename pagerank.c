@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   printf("Process %d on %s out of %d\n", rank, processor_name, numprocs);
   if(rank == 0){
 
-    fp = fopen("/etc/motd", "r");
+    fp = fopen("./graphs/200K-graph.txt", "r");
     if (fp == NULL){
       return 0;
     }
@@ -29,6 +29,6 @@ int main(int argc, char *argv[]) {
     if (line)
     free(line);
   }
-  
+
   MPI_Finalize();
 }
