@@ -3,21 +3,23 @@
 #include <mpi.h>
 
 void sperate_by_space(int* array, char* line){
-  char * pch;
-  pch = strtok (line," ");
-  int flag = 0;
-  int count = 0;
-  while (pch != NULL)
+  int i=0,j=0, flag = 0;
+  char str[10]
+  while(line[i]!='\0')
   {
-    pch = strtok (NULL, " ");
-    if(flag){
-      *array = atof(pch);
-      array++;
-    }else{
-      printf("%d: %s\n",count++, line[0]);
-
-      flag = 1;
+    if(line[i]!=' ')
+    {
+      str[j++]=sent[i];
     }
+    else
+    {
+      str[j]='\0';
+      if(!flag)
+        puts(str);
+      strcpy(str,"");
+      j=0;
+    }
+    i++;
   }
 }
 
@@ -54,18 +56,18 @@ int main(int argc, char *argv[]) {
       printf("%d\n", count);
       switch (num) {
         case 0:
-          printf("Need alloc %d for val\n", count-1 );
-          val = (int *)malloc((count - 1 )*sizeof(int));
-          sperate_by_space(val, line);
-          break;
+        printf("Need alloc %d for val\n", count-1 );
+        val = (int *)malloc((count - 1 )*sizeof(int));
+        sperate_by_space(val, line);
+        break;
         case 1:
-          col = (int *)malloc((count - 1 )*sizeof(int));
-          printf("Need alloc %d for col\n", count-1 );
-          break;
+        col = (int *)malloc((count - 1 )*sizeof(int));
+        printf("Need alloc %d for col\n", count-1 );
+        break;
         case 2:
-          row = (int *)malloc((count - 1 )*sizeof(int));
-          printf("Need alloc %d for row\n", count-1 );
-          break;
+        row = (int *)malloc((count - 1 )*sizeof(int));
+        printf("Need alloc %d for row\n", count-1 );
+        break;
       }
 
       num++;
