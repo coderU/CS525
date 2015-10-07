@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 
     while ((read = getline(&line, &len, fp)) != -1) {
       printf("Retrieved line of length %zu :\n", read);
-      pch = strtok (read ," ");
+      pch = strtok (line ," ");
       while (pch != NULL)
       {
         printf ("%s\n",pch);
