@@ -9,11 +9,6 @@ int main(int argc, char *argv[]) {
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
-
-  char* token;
-  char* string;
-  char* tofree;
-
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -28,8 +23,13 @@ int main(int argc, char *argv[]) {
     }
 
     while ((read = getline(&line, &len, fp)) != -1) {
-      string = line;
-      printf("%s\n",line);
+      int count = 0;
+      char* temp = line;
+      while(*temp != '\0'){
+        temp++;
+        count++;
+      }
+      printf("%d\n", count);
     }
 
     fclose(fp);
