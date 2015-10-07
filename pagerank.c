@@ -141,11 +141,10 @@ int main(int argc, char *argv[]) {
       if(*line == '\n'){
         break;
       }
-      printf("%s\n",line );
       *(part+part_count) = atoi(line);
       part_count++;
     }
-    printf("%d\n", *(part+part_count-1));
+    printf("%d %d\n", *(part+part_count-1),part_count-1);
     fclose(fp);
     if (line){
       free(line);
