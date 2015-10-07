@@ -181,7 +181,11 @@ int main(int argc, char *argv[]) {
     for(i = 0 ; i < (max+1) ; i++){
       *(part_val+i) = (float*)malloc(final_count[i]*sizeof(float));
       *(part_col+i) = (int*)malloc(final_count[i]*sizeof(int));
-      *(part_row+i) = (int*)malloc(final_count[i]*sizeof(int));    
+      *(part_row+i) = (int*)malloc(final_count[i]*sizeof(int));
+    }
+
+    for(i = 0 ; i < part_count ; i++){
+      int temp_row = 
     }
   }
 
