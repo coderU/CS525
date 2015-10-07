@@ -96,15 +96,17 @@ int main(int argc, char *argv[]) {
       switch (num) {
         case 0:
         printf("Need alloc %d for val\n", count-1 );
-        val = (float *)malloc((count)*sizeof(int));
+        val = (float *)malloc((count - 1)*sizeof(int));
         sperate_by_space_f(val, line);
+        printf("%d %d\n",(count -1), *(row+count-1));
+
         break;
         case 1:
-        col = (int *)malloc((count)*sizeof(int));
+        col = (int *)malloc((count - 1)*sizeof(int));
         printf("Need alloc %d for col\n", count-1 );
         break;
         case 2:
-        row = (int *)malloc((count)*sizeof(int));
+        row = (int *)malloc((count - 1)*sizeof(int));
         sperate_by_space_i(row, line);
         printf("%d %d\n",(count -2), *(row+count-2));
 
