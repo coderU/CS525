@@ -14,8 +14,10 @@ void sperate_by_space(int* array, char* line){
     else
     {
       str[j]='\0';
-      if(!flag)
+      if(!flag){
         puts(str);
+        flag = 1;
+      }
       strcpy(str,"");
       j=0;
     }
