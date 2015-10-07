@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
       pch = strtok (line ," ");
       while (pch != NULL)
       {
-        printf ("%s\n",pch);
+        // printf ("%s\n",pch);
         pch = strtok (NULL, " ");
       }
       printf('\n');
