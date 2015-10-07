@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     if (fp == NULL){
       return 0;
     }
-
+    int num = 0;
     while ((read = getline(&line, &len, fp)) != -1) {
       int count = 0;
       char* temp = line;
@@ -30,6 +30,19 @@ int main(int argc, char *argv[]) {
         count++;
       }
       printf("%d\n", count);
+      switch (num) {
+        case 0:
+          printf("Need alloc %d for val\n", count-1 );
+          break;
+        case 1:
+          printf("Need alloc %d for col\n", count-1 );
+          break;
+        case 2:
+          printf("Need alloc %d for row\n", count-1 );
+          break;
+      }
+
+      num++;
     }
 
     fclose(fp);
