@@ -22,7 +22,7 @@ void sperate_by_space_f(float* array, char* line){
         flag = 1;
       }else{
         *array = atof(str);
-        if(array == 0){
+        if(array != 1){
           printf("%d %f\n",count, *array );
         }
       }
