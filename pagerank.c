@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
       while(*temp != '\0'){
         temp++;
         if(*temp == ' '){
-          count++;          
+          count++;
         }
       }
       printf("%d\n", count);
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
         printf("Need alloc %d for val\n", count-1 );
         val = (float *)malloc((count - 1 )*sizeof(int));
         sperate_by_space_f(val, line);
-        printf("%d %f\n",(count -1), *(val+count-2));
+        printf("%d %f\n",(count -1), *(val+count-3));
         break;
         case 1:
         col = (int *)malloc((count - 1 )*sizeof(int));
