@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 
         while ((token = strsep(&string, " ")) != NULL)
         {
-          if(s){
+          if(token){
             printf("%s\n", token);
           }
         }
