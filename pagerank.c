@@ -178,6 +178,11 @@ int main(int argc, char *argv[]) {
     part_col = (int**)malloc((max+1)*sizeof(int*));
     part_row = (int**)malloc((max+1)*sizeof(int*));
 
+    for(i = 0 ; i < (max+1) ; i++){
+      *(part_val+i) = (float*)malloc(final_count[i]*sizeof(float));
+      *(part_col+i) = (int*)malloc(final_count[i]*sizeof(int));
+      *(part_row+i) = (int*)malloc(final_count[i]*sizeof(int));    
+    }
   }
 
   MPI_Finalize();
