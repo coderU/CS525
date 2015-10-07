@@ -79,6 +79,9 @@ int main(int argc, char *argv[]) {
   MPI_Get_processor_name(processor_name, &namelen);
   printf("Process %d on %s out of %d\n", rank, processor_name, numprocs);
   float** matrix;
+  float** part_val;
+  int** part_col;
+  int** part_row;
   if(rank == 0){
     //**************************************************************************
     //READ CRS
@@ -157,7 +160,11 @@ int main(int argc, char *argv[]) {
       free(line);
     }
     //**************************************************************************
-
+    //Seperate NODES
+    int final_count[(max+1)];
+    part_val = (float**)malloc((max+1)*sizeof(float*));
+    part_col = (int**)malloc((max+1)*sizeof(int*));
+    part_row = (int**)malloc((max+1)*sizeof(int*));
 
   }
 
