@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
+#include <string.h>
 
-void sperate_by_space(int* array, char* line){
+
+void sperate_by_space_f(float* array, char* line){
   int i=0,j=0, flag = 0;
   char str[10];
   while(line[i]!='\0')
@@ -17,6 +19,8 @@ void sperate_by_space(int* array, char* line){
       if(!flag){
         puts(str);
         flag = 1;
+      }else{
+        *array = atof(str);
       }
       strcpy(str,"");
       j=0;
@@ -32,7 +36,7 @@ int main(int argc, char *argv[]) {
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
-  int *val;
+  float *val;
   int *col;
   int *row;
   MPI_Init(&argc, &argv);
@@ -59,8 +63,8 @@ int main(int argc, char *argv[]) {
       switch (num) {
         case 0:
         printf("Need alloc %d for val\n", count-1 );
-        val = (int *)malloc((count - 1 )*sizeof(int));
-        sperate_by_space(val, line);
+        val = (float *)malloc((count - 1 )*sizeof(int));
+        sperate_by_space_f(val, line);
         break;
         case 1:
         col = (int *)malloc((count - 1 )*sizeof(int));
