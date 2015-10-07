@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         printf("Need alloc %d for val\n", count-1 );
         val = (float *)malloc((count - 1 )*sizeof(int));
         sperate_by_space_f(val, line);
-        printf("%d %f\n",(count -1), *(val+count-1));
+        printf("%d %f\n",(count -1), *(val+count-2));
         break;
         case 1:
         col = (int *)malloc((count - 1 )*sizeof(int));
