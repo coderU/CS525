@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 
         tofree = string;
 
-        while ((token = strsep(&string, ",")) != NULL)
+        while ((token = strsep(&string, " ")) != NULL)
         {
           printf("%s\n", token);
         }
