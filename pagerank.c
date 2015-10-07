@@ -60,7 +60,9 @@ int main(int argc, char *argv[]) {
       char* temp = line;
       while(*temp != '\0'){
         temp++;
-        count++;
+        if(*temp == ' '){
+          count++;          
+        }
       }
       printf("%d\n", count);
       switch (num) {
