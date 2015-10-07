@@ -6,11 +6,12 @@ void sperate_by_space(int* array, char* line){
   char * pch;
   pch = strtok (line," ");
   int flag = 0;
+  int count = 0;
   while (pch != NULL)
   {
     pch = strtok (NULL, " ");
     if(flag){
-      printf("%f\n",atof(pch));
+      printf("%d: %f\n",count++, atof(pch));
       *array = atof(pch);
       array++;
     }else{
