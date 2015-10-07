@@ -11,7 +11,7 @@ void sperate_by_space(int* array, char* line){
   {
     pch = strtok (NULL, " ");
     if(flag){
-      printf("%d: %f\n",count++, atof(pch));
+      // printf("%d: %f\n",count++, atof(pch));
       *array = atof(pch);
       array++;
     }else{
