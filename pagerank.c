@@ -22,7 +22,7 @@ void sperate_by_space_f(float* array, char* line){
       if(!flag){
         flag = 1;
       }else{
-        *array = atof(str);
+        *(array++) = atof(str);
       }
       strcpy(str,"");
       j=0;
@@ -49,7 +49,8 @@ void sperate_by_space_i(int* array, char* line){
       if(!flag){
         flag = 1;
       }else{
-        *array = atoi(str);
+        *(array++) = atoi(str);
+        // printf("%d\n", *array);
       }
       strcpy(str,"");
       j=0;
@@ -95,15 +96,15 @@ int main(int argc, char *argv[]) {
       switch (num) {
         case 0:
         printf("Need alloc %d for val\n", count-1 );
-        val = (float *)malloc((count - 1 )*sizeof(int));
+        val = (float *)malloc((count)*sizeof(int));
         sperate_by_space_f(val, line);
         break;
         case 1:
-        col = (int *)malloc((count - 1 )*sizeof(int));
+        col = (int *)malloc((count)*sizeof(int));
         printf("Need alloc %d for col\n", count-1 );
         break;
         case 2:
-        row = (int *)malloc((count - 1 )*sizeof(int));
+        row = (int *)malloc((count)*sizeof(int));
         sperate_by_space_i(row, line);
         printf("%d %d\n",(count -1), *(row+count-3));
 
