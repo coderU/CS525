@@ -134,8 +134,8 @@ int main(int argc, char *argv[]) {
     if (fp == NULL){
       return 0;
     }
-    printf("aaaaaaaaaaaaaaaaa\n" );
     part = (int*)malloc(size*sizeof(int));
+    printf("aaaaaaaaaaaaaaaaa\n" );
     int part_count = 0;
     while ((read = getline(&line, &len, fp)) != -1) {
       if(*line == '\n'){
