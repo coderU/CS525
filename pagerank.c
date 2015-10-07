@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
-
+  char * pch;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -22,7 +22,13 @@ int main(int argc, char *argv[]) {
 
     while ((read = getline(&line, &len, fp)) != -1) {
       printf("Retrieved line of length %zu :\n", read);
-      printf("%s", line);
+      pch = strtok (read ," ");
+      while (pch != NULL)
+      {
+        printf ("%s\n",pch);
+        pch = strtok (NULL, " ");
+      }
+      printf('\n');
     }
 
     fclose(fp);
