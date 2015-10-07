@@ -130,12 +130,12 @@ int main(int argc, char *argv[]) {
       free(line);
     }
     //**************************************************************************
+    len = 0;
     fp = fopen("./graphs/200K-graph.txt.part.4", "r");
     if (fp == NULL){
       return 0;
     }
     part = (int*)malloc(size*sizeof(int));
-    printf("aaaaaaaaaaaaaaaaa\n" );
     int part_count = 0;
     while ((read = getline(&line, &len, fp)) != -1) {
       if(*line == '\n'){
