@@ -71,6 +71,7 @@ int main(int argc, char *argv[]) {
   int *col;
   int *row;
   int *part;
+  int max = 0;
   int size;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
@@ -130,6 +131,7 @@ int main(int argc, char *argv[]) {
       free(line);
     }
     //**************************************************************************
+    //READ PARTITION
     len = 0;
     fp = fopen("./graphs/200K-graph.txt.part.4", "r");
     if (fp == NULL){
@@ -137,18 +139,25 @@ int main(int argc, char *argv[]) {
     }
     part = (int*)malloc(size*sizeof(int));
     int part_count = 0;
+    int current = 0;
     while ((read = getline(&line, &len, fp)) != -1) {
       if(*line == '\n'){
         break;
       }
-      *(part+part_count) = atoi(line);
+      current = atoi(line);
+      max = (max > current )?max:current
+      *(part+part_count) = current;
       part_count++;
     }
-    printf("%d %d\n", *(part+part_count-1),part_count-1);
+    if(DEBUG){
+      printf("%d %d %d\n", *(part+part_count-1),part_count-1,max);
+    }
     fclose(fp);
     if (line){
       free(line);
     }
+    //**************************************************************************
+
 
   }
 
