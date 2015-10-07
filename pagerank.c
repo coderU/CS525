@@ -29,20 +29,7 @@ int main(int argc, char *argv[]) {
 
     while ((read = getline(&line, &len, fp)) != -1) {
       string = line;
-
-      if (string != NULL) {
-
-        tofree = string;
-
-        while ((token = strsep(&string, " ")) != NULL)
-        {
-          if(token){
-            printf("%s\n", token);
-          }
-        }
-
-        free(tofree);
-      }
+      printf("%s\n",line);
     }
 
     fclose(fp);
