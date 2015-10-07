@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
   int *part;
   int max = 0;
   int size;
+  int i;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -162,6 +163,17 @@ int main(int argc, char *argv[]) {
     //**************************************************************************
     //Seperate NODES
     int final_count[(max+1)];
+    for(i = 0 ; i < (max+1) ; i++){
+      final_count[i] = 0;
+    }
+    for(i = 0 ; i < part_count ; i++){
+      final_count[*(part+i)]++;
+    }
+    if(DEBUG){
+      for(i = 0 ; i < (max+1) ; i++){
+        printf("%d: %d\n",i, final_count[i]);
+      }
+    }
     part_val = (float**)malloc((max+1)*sizeof(float*));
     part_col = (int**)malloc((max+1)*sizeof(int*));
     part_row = (int**)malloc((max+1)*sizeof(int*));
