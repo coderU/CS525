@@ -140,6 +140,7 @@ int main(int argc, char *argv[]) {
       if(*line == '\n'){
         break;
       }
+      printf("%s\n",line );
       *(part+part_count) = atoi(line);
       part_count++;
     }
@@ -148,6 +149,7 @@ int main(int argc, char *argv[]) {
     if (line){
       free(line);
     }
+
   }
 
   MPI_Finalize();
