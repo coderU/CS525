@@ -36,12 +36,15 @@ int main(int argc, char *argv[]) {
 
         while ((token = strsep(&string, " ")) != NULL)
         {
-          printf("%s\n", token);
+          if(s){
+            printf("%s\n", token);
+          }
         }
 
         free(tofree);
       }
     }
+
     fclose(fp);
     if (line){
       free(line);
