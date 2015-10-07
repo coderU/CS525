@@ -7,6 +7,7 @@
 void sperate_by_space_f(float* array, char* line){
   int i=0,j=0, flag = 0;
   char str[10];
+  int count = 0;
   while(line[i]!='\0')
   {
     if(line[i]!=' ')
@@ -21,9 +22,13 @@ void sperate_by_space_f(float* array, char* line){
         flag = 1;
       }else{
         *array = atof(str);
+        if(array == 0){
+          printf("%d %f\n",count, *array );
+        }
       }
       strcpy(str,"");
       j=0;
+      count++;
     }
     i++;
   }
