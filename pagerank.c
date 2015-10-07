@@ -3,7 +3,9 @@
 #include <mpi.h>
 #include <string.h>
 
-
+#ifndef DEBUG
+#define DEBUG 1
+#endif
 void sperate_by_space_f(float* array, char* line){
   int i=0,j=0, flag = 0;
   char str[10];
@@ -18,13 +20,9 @@ void sperate_by_space_f(float* array, char* line){
     {
       str[j]='\0';
       if(!flag){
-        puts(str);
         flag = 1;
       }else{
         *array = atof(str);
-        if(array != 1){
-          printf("%d %f\n",count, *array );
-        }
       }
       strcpy(str,"");
       j=0;
@@ -70,6 +68,7 @@ int main(int argc, char *argv[]) {
         printf("Need alloc %d for val\n", count-1 );
         val = (float *)malloc((count - 1 )*sizeof(int));
         sperate_by_space_f(val, line);
+        printf("%d %f\n",(count -1), *(val+count-1));
         break;
         case 1:
         col = (int *)malloc((count - 1 )*sizeof(int));
