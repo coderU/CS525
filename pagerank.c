@@ -5,7 +5,7 @@
 void sperate_by_space(int* array, char* line){
   char * pch;
   pch = strtok (line," ");
-  bool flag = false;
+  int flag = 0;
   while (pch != NULL)
   {
     pch = strtok (NULL, " ");
@@ -13,7 +13,7 @@ void sperate_by_space(int* array, char* line){
       *array = atof(pch);
       array++;
     }else{
-      flag = true;
+      flag = 1;
     }
   }
 }
