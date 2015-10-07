@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
         case 2:
         row = (int *)malloc((count)*sizeof(int));
         sperate_by_space_i(row, line);
-        printf("%d %d\n",(count -1), *(row+count-1));
+        printf("%d %d\n",(count -2), *(row+count-2));
 
         printf("Need alloc %d for row\n", count-1 );
         break;
