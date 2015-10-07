@@ -70,14 +70,17 @@ int main(int argc, char *argv[]) {
   float *val;
   int *col;
   int *row;
+  int *part;
+  int size;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Get_processor_name(processor_name, &namelen);
   printf("Process %d on %s out of %d\n", rank, processor_name, numprocs);
-
+  float** matrix;
   if(rank == 0){
-
+    //**************************************************************************
+    //READ CRS
     fp = fopen("./graphs/200K-graph.txt", "r");
     if (fp == NULL){
       return 0;
@@ -95,30 +98,52 @@ int main(int argc, char *argv[]) {
       printf("%d\n", count);
       switch (num) {
         case 0:
-        printf("Need alloc %d for val\n", count-1 );
         val = (float *)malloc((count - 1)*sizeof(int));
         sperate_by_space_f(val, line);
-        printf("%d %f\n",(count -2), *(val+count-2));
-
+        if(DEBUG){
+          printf("Need alloc %d for val\n", count-1 );
+          printf("%d %f\n",(count -2), *(val+count-2));
+        }
         break;
         case 1:
         col = (int *)malloc((count - 1)*sizeof(int));
-        printf("Need alloc %d for col\n", count-1 );
         sperate_by_space_i(col, line);
-        printf("%d %d\n",(count -2), *(col+count-2));
+        if(DEBUG){
+          printf("Need alloc %d for col\n", count-1 );
+          printf("%d %d\n",(count -2), *(col+count-2));
+        }
         break;
         case 2:
-        printf("Need alloc %d for row\n", count-1 );    
         row = (int *)malloc((count - 1)*sizeof(int));
         sperate_by_space_i(row, line);
-        printf("%d %d\n",(count -2), *(row+count-2));
-
+        if(DEBUG){
+          printf("Need alloc %d for row\n", count-1 );
+          printf("%d %d\n",(count -2), *(row+count-2));
+        }
+        size = count-1;
         break;
       }
-
       num++;
     }
-
+    fclose(fp);
+    if (line){
+      free(line);
+    }
+    //**************************************************************************
+    fp = fopen("./graphs/200K-graph.txt.part.4", "r");
+    if (fp == NULL){
+      return 0;
+    }
+    part = (int*)malloc(size*sizeof(int));
+    int part_count = 0;
+    while ((read = getline(&line, &len, fp)) != -1) {
+      if(*line == '\n'){
+        break;
+      }
+      *(part+part_count) = atoi(line);
+      part_count++;
+    }
+    printf("%d\n", *(part+part_count-1));
     fclose(fp);
     if (line){
       free(line);
