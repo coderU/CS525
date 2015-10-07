@@ -145,8 +145,8 @@ int main(int argc, char *argv[]) {
         break;
       }
       current = atoi(line);
-      max = (max > current )?max:current
-      *(part+part_count) = current;
+      max = (max > current)?max:current;
+      *(part+part_count) = atoi(line);
       part_count++;
     }
     if(DEBUG){
