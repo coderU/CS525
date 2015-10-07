@@ -9,6 +9,9 @@ int main(int argc, char *argv[]) {
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
+  int *val;
+  int *col;
+  int *row;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -33,11 +36,14 @@ int main(int argc, char *argv[]) {
       switch (num) {
         case 0:
           printf("Need alloc %d for val\n", count-1 );
+          val = (int *)malloc((count - 1 )*sizeof(int));
           break;
         case 1:
+          col = (int *)malloc((count - 1 )*sizeof(int));
           printf("Need alloc %d for col\n", count-1 );
           break;
         case 2:
+          row = (int *)malloc((count - 1 )*sizeof(int));
           printf("Need alloc %d for row\n", count-1 );
           break;
       }
