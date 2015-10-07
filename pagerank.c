@@ -98,19 +98,21 @@ int main(int argc, char *argv[]) {
         printf("Need alloc %d for val\n", count-1 );
         val = (float *)malloc((count - 1)*sizeof(int));
         sperate_by_space_f(val, line);
-        printf("%d %d\n",(count -2), *(row+count-2));
+        printf("%d %f\n",(count -2), *(val+count-2));
 
         break;
         case 1:
         col = (int *)malloc((count - 1)*sizeof(int));
         printf("Need alloc %d for col\n", count-1 );
+        sperate_by_space_i(col, line);
+        printf("%d %d\n",(count -2), *(col+count-2));
         break;
         case 2:
+        printf("Need alloc %d for row\n", count-1 );    
         row = (int *)malloc((count - 1)*sizeof(int));
         sperate_by_space_i(row, line);
         printf("%d %d\n",(count -2), *(row+count-2));
 
-        printf("Need alloc %d for row\n", count-1 );
         break;
       }
 
