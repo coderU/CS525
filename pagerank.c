@@ -4,12 +4,12 @@
 
 void sperate_by_space(int* array, char* line){
   int i=0,j=0, flag = 0;
-  char str[10]
+  char str[10];
   while(line[i]!='\0')
   {
     if(line[i]!=' ')
     {
-      str[j++]=sent[i];
+      str[j++]=line[i];
     }
     else
     {
