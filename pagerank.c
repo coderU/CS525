@@ -2,6 +2,22 @@
 #include <stdlib.h>
 #include <mpi.h>
 
+void sperate_by_space(int* array, char* line){
+  char * pch;
+  pch = strtok (line," ");
+  bool flag = false;
+  while (pch != NULL)
+  {
+    pch = strtok (NULL, " ");
+    if(flag){
+      *array = atof(pch);
+      array++;
+    }else{
+      flag = true;
+    }
+  }
+}
+
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -37,6 +53,7 @@ int main(int argc, char *argv[]) {
         case 0:
           printf("Need alloc %d for val\n", count-1 );
           val = (int *)malloc((count - 1 )*sizeof(int));
+          sperate_by_space(val, line);
           break;
         case 1:
           col = (int *)malloc((count - 1 )*sizeof(int));
