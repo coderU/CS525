@@ -32,6 +32,33 @@ void sperate_by_space_f(float* array, char* line){
   }
 }
 
+
+void sperate_by_space_i(int* array, char* line){
+  int i=0,j=0, flag = 0;
+  char str[10];
+  int count = 0;
+  while(line[i]!='\0')
+  {
+    if(line[i]!=' ')
+    {
+      str[j++]=line[i];
+    }
+    else
+    {
+      str[j]='\0';
+      if(!flag){
+        flag = 1;
+      }else{
+        *array = atoi(str);
+      }
+      strcpy(str,"");
+      j=0;
+      count++;
+    }
+    i++;
+  }
+}
+
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -70,7 +97,6 @@ int main(int argc, char *argv[]) {
         printf("Need alloc %d for val\n", count-1 );
         val = (float *)malloc((count - 1 )*sizeof(int));
         sperate_by_space_f(val, line);
-        printf("%d %f\n",(count -1), *(val+count-3));
         break;
         case 1:
         col = (int *)malloc((count - 1 )*sizeof(int));
@@ -78,6 +104,9 @@ int main(int argc, char *argv[]) {
         break;
         case 2:
         row = (int *)malloc((count - 1 )*sizeof(int));
+        sperate_by_space_i(row, line);
+        printf("%d %d\n",(count -1), *(row+count-3));
+
         printf("Need alloc %d for row\n", count-1 );
         break;
       }
