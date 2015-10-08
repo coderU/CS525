@@ -224,7 +224,7 @@ int main(int argc, char *argv[]) {
     *matrix = (float*)malloc((size-1)*sizeof(float));
   }
   printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
-  printf("%f\n",*(*(matrix+0)+196590) );
+  printf("%f\n",*(*(matrix+1)+0) );
   // for(i = 0 ; i < size - 1 ; i++){
   //   for(j = 0 ; j < size - 1 ; j++){
   //     // printf("%d %d %f\n", i, j ,*(*(matrix+i)+j));
