@@ -281,14 +281,20 @@ int main(int argc, char *argv[]) {
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
+      //TODO: SEND ONLY NECCESSERY
+      MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+      MPI_Send(vector, (size-1), MPI_INT, i, 0, MPI_COMM_WORLD);
     }
   }
   else{
     MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     index = (int*)malloc(elements_count*sizeof(int));
     MPI_Recv(index, elements_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    MPI_Recv(vector, (size-1), MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     if(DEBUG){
-      printf("After Distributed node %d has %d elements and last element should be %d\n", rank, elements_count,*(index+elements_count-1) );
+      printf("After Distributed node %d has %d elements and last element should be %d, and first element of vector is %d\n", rank, elements_count,*(index+elements_count-1),*vector );
     }
 
   }
