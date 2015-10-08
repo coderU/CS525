@@ -82,7 +82,7 @@ void combine_vector(float* a, float* b, int size){
 int calculate_diff(float* a, float* b, int size){
   int i = 0;
   for( i = 0 ; i < size ; i++){
-    if((*(a+i)-*(b+i))>0.00001){
+    if((*(a+i)-*(b+i))>0.00001 || (*(a+i)-*(b+i))<-0.00001){
       printf("%f %f\n",*(a+i),*(b+i) );
 
       return 0;
@@ -358,7 +358,7 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok = 0;
-  while(iteration < 3){
+  while(iteration < 100){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
