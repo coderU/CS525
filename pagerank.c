@@ -68,6 +68,9 @@ float calculate_rank(float* val, int* col, int* row, int node_index, float* vect
   for( i = start ; i < end ; i++){
     sum = sum + (*(val+i))*(*(vector+*(col+i)));
   }
+  if(sum/(start - end) != 0){
+    printf("aaaaa: %f\n", sum/(start - end));
+  }
   return sum/(start - end);
 }
 
@@ -343,7 +346,7 @@ int main(int argc, char *argv[]) {
   if(rank == 0){
     for(i = 0 ; i < size-1 ; i++){
       if(*(vector+i)!=0)
-        printf("After first iteration vector has node: %d has value %f \n",i , *(vector+i));      
+        printf("After first iteration vector has node: %d has value %f \n",i , *(vector+i));
     }
   }
 
