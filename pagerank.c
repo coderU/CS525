@@ -179,6 +179,10 @@ int main(int argc, char *argv[]) {
       *(subgraph_count+*(part+i)) = *(subgraph_count+*(part+i))+1;
     }
 
+
+    for(i = 0 ; i < (max+1) ; i++){
+      printf("Node %d has: %d elements\n",i, *(subgraph_count+i) );
+    }
     for(i = 0 ; i < (max+1) ; i++){
       *(subgraph+i)=(int*)malloc(*(subgraph_count+i)*sizeof(int));
     }
@@ -251,26 +255,34 @@ int main(int argc, char *argv[]) {
   }
   //**************************************************************************
   //CREATE MATRIX
-  matrix = (float**)malloc((size-1)*sizeof(float*));
-  for( i = 0 ; i < size - 1; i ++){
-    *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
-  }
-
   printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
-  for(i = 0 ; i < size - 1 ; i++){
-    int start = *(row+i);
-    int end = *(row+i+1);
-    for(j = start ; j < end ; j++){
-      *(*(matrix+i)+*(col+j)) = *(val+j);
-    }
+  // matrix = (float**)malloc((size-1)*sizeof(float*));
+  // for( i = 0 ; i < size - 1; i ++){
+  //   *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
+  // }
+  //
+  // for(i = 0 ; i < size - 1 ; i++){
+  //   int start = *(row+i);
+  //   int end = *(row+i+1);
+  //   for(j = start ; j < end ; j++){
+  //     *(*(matrix+i)+*(col+j)) = *(val+j);
+  //   }
+  // }
+
+  float *vector = (float*)malloc((size-1)*sizeof(float));
+  for(i = 0 ; i < size-1; i++){
+    *(vector+i) = 0;
   }
-
+  *vector = 1;
+  int elements_count;
   if(rank == 0){
-    for(i = 0 ; i < (max+1) ; i++){
-
+    //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
+    for(i = 1 ; i < (max+1) ; i++){
+      MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
     }
   }else{
-
+    MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    printf("After Distributed node %d has %d elements\n", rank, elements_count );
   }
 
   MPI_Finalize();
