@@ -224,21 +224,18 @@ int main(int argc, char *argv[]) {
     *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
   }
   printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
-  printf("%f\n",*(*(matrix+1)+0) );
-  // for(i = 0 ; i < size - 1 ; i++){
-  //   for(j = 0 ; j < size - 1 ; j++){
-  //     // printf("%d %d %f\n", i, j ,*(*(matrix+i)+j));
-  //     *(*(matrix+i)+j) = 0;
-  //   }
-  //   // printf("\n");
-  // }
-  // for(i = 0 ; i < size - 1 ; i++){
-  //   int start = *(row+i);
-  //   int end = *(row+i+1);
-  //   for(j = start ; j < end ; j++){
-  //     *(*(matrix+i)+*(col+j)) = *(val+j);
-  //   }
-  // }
+  for(i = 0 ; i < size - 1 ; i++){
+    for(j = 0 ; j < size - 1 ; j++){
+      *(*(matrix+i)+j) = 0;
+    }
+  }
+  for(i = 0 ; i < size - 1 ; i++){
+    int start = *(row+i);
+    int end = *(row+i+1);
+    for(j = start ; j < end ; j++){
+      *(*(matrix+i)+*(col+j)) = *(val+j);
+    }
+  }
 
   MPI_Finalize();
 }
