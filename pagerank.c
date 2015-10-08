@@ -294,7 +294,7 @@ int main(int argc, char *argv[]) {
     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     if(DEBUG){
       printf("After Distributed node %d has %d elements and last element should be %d\n", rank, elements_count,*(index+elements_count-1));
-      printf("After Distributed local vector has %d nodes and first one is %f\n",size-1, *vector );
+      printf("After Distributed local vector has %d nodes and first one is %f while last one is %f\n",size-1, *vector, *(vector+size-2) );
     }
 
   }
