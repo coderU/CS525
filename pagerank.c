@@ -179,9 +179,9 @@ int main(int argc, char *argv[]) {
       *(subgraph_count+*(part+i)) = *(subgraph_count+*(part+i))+1;
     }
 
-    // for(i = 0 ; i < (max+1) ; i++){
-    //   *(subgraph+i)=(int*)malloc(*(subgraph_count+i)*sizeof(int));
-    // }
+    for(i = 0 ; i < (max+1) ; i++){
+      *(subgraph+i)=(int*)malloc(*(subgraph_count+i)*sizeof(int));
+    }
     //
     // for(i = 0 ; i < part_count ; i++){
     //   *(*(subgraph+i)+*(subgraph_index+i)) = i;
