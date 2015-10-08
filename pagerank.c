@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
     printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
     printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
 
-    printf("**************************************************************************\n")
+    printf("**************************************************************************\n");
   }
 
 
