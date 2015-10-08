@@ -379,7 +379,7 @@ int main(int argc, char *argv[]) {
   }
   if(rank == 0){
     for(i = 0 ; i < size-1 ; i++){
-      if(*(vector+i)!=0)
+      if(*(vector+i)>=0.0005)
         printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
     }
   }
