@@ -78,6 +78,16 @@ void combine_vector(float* a, float* b, int size){
     *(a+i) = *(a+i)+*(b+i);
   }
 }
+
+int calculate_diff(float* a, float* b, int size){
+  int i = 0;
+  for( i = 0 ; i < size ; i++){
+    if(*(a+i)-*(b+i)>0.00001){
+      return 0;
+    }
+  }
+  return 1;
+}
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -345,6 +355,7 @@ int main(int argc, char *argv[]) {
 
 
   int iteration = 1;
+  int ok;
   while(iteration < 100){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
@@ -364,6 +375,7 @@ int main(int argc, char *argv[]) {
         MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         combine_vector(l_vector, t_vector, size-1);
       }
+      ok = calculate_diff(vector,l_vector, size-1);
       vector = l_vector;
     }
     else{
@@ -377,6 +389,10 @@ int main(int argc, char *argv[]) {
         *(l_vector+*(index+i)) = value;
       }
       MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+    }
+    MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    if(ok){
+      break;
     }
     iteration++;
   }
