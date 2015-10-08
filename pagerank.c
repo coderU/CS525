@@ -210,7 +210,9 @@ int main(int argc, char *argv[]) {
   }
   MPI_Bcast(row, size, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&part_count, 1, MPI_INT, 0, MPI_COMM_WORLD);
-  part = (int*)malloc(part_count*sizeof(int));
+  if(rank != 0){
+    part = (int*)malloc(part_count*sizeof(int));    
+  }
 
   MPI_Bcast(part, part_count, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
