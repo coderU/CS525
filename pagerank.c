@@ -226,10 +226,10 @@ int main(int argc, char *argv[]) {
 
   for(i = 0 ; i < size - 1 ; i++){
     for(j = 0 ; j < size - 1 ; j++){
-      printf("%d %d %f\n", i, j ,*(*(matrix+i)+j));
+      // printf("%d %d %f\n", i, j ,*(*(matrix+i)+j));
       // *(*(matrix+i)+j) = 0;
     }
-    printf("\n");
+    // printf("\n");
   }
   // for(i = 0 ; i < size - 1 ; i++){
   //   int start = *(row+i);
