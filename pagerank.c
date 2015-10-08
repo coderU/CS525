@@ -394,6 +394,8 @@ int main(int argc, char *argv[]) {
     }
     MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
     iteration++;
+    MPI_Barrier(MPI_COMM_WORLD);
+    
     // if(ok){
     //   break;
     // }
