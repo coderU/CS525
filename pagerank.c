@@ -84,7 +84,7 @@ int calculate_diff(float* a, float* b, int size){
   for( i = 0 ; i < size ; i++){
     if((*(a+i)-*(b+i))>0.00001){
       printf("%f %f\n",*(a+i),*(b+i) );
-      
+
       return 0;
     }
   }
@@ -401,12 +401,12 @@ int main(int argc, char *argv[]) {
 
   if(rank == 0){
     gettimeofday(&t2, NULL);
-    if(DEBUG){
-      for(i = 0 ; i < size-1 ; i++){
-        if(*(vector+i)>=0.00001)
-          printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
-      }
-    }
+    // if(DEBUG){
+    //   for(i = 0 ; i < size-1 ; i++){
+    //     if(*(vector+i)>=0.00001)
+    //       printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
+    //   }
+    // }
     printf("Total Time Cost: %ld secs\n", t2.tv_sec - t1.tv_sec);
   }
   MPI_Finalize();
