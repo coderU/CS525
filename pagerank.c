@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
   MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("%d: %d\n",rank, (l_val_size -1);
+  printf("%d: %d\n",rank, l_val_size -1);
 
   MPI_Finalize();
 }
