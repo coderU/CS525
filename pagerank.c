@@ -200,9 +200,21 @@ int main(int argc, char *argv[]) {
   }
   MPI_Bcast(val, l_val_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
+  if(rank != 0){
+    col = (int *)malloc(l_val_size*sizeof(int));
+  }
+  MPI_Bcast(col, l_val_size, MPI_INT, 0, MPI_COMM_WORLD);
 
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
+
+  if(DEBUG){
+    printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
+    printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
+
+    printf("**************************************************************************\n")
+  }
+
+
 
   MPI_Finalize();
 }
