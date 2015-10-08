@@ -82,8 +82,9 @@ void combine_vector(float* a, float* b, int size){
 int calculate_diff(float* a, float* b, int size){
   int i = 0;
   for( i = 0 ; i < size ; i++){
-    printf("%f %f\n",*(a+i),*(b+i) );
     if((*(a+i)-*(b+i))>0.00001){
+      printf("%f %f\n",*(a+i),*(b+i) );
+      
       return 0;
     }
   }
