@@ -208,13 +208,16 @@ int main(int argc, char *argv[]) {
     row = (int *)malloc(size*sizeof(int));
   }
   MPI_Bcast(row, size, MPI_INT, 0, MPI_COMM_WORLD);
-
+  MPI_Bcast(&part_count, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(part, part_count, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 
   if(DEBUG){
     printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
     printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
     printf("%d: %d %d\n",rank, size -1, *(row+size-1));
+    printf("%d: %d %d\n",rank, part_count -1, *(part+part_count-1));
+
     printf("**************************************************************************\n");
   }
   //**************************************************************************
@@ -234,9 +237,10 @@ int main(int argc, char *argv[]) {
     int end = *(row+i+1);
     for(j = start ; j < end ; j++){
       *(*(matrix+i)+*(col+j)) = *(val+j);
-      // printf("%d %d\n", i, *(col+j));
     }
   }
+
+
 
   MPI_Finalize();
 }
