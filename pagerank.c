@@ -234,7 +234,7 @@ int main(int argc, char *argv[]) {
     int end = *(row+i+1);
     for(j = start ; j < end ; j++){
       *(*(matrix+i)+*(col+j)) = *(val+j);
-      printf("%d %d\n", i, *(col+j));
+      // printf("%d %d\n", i, *(col+j));
     }
   }
 
