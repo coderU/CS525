@@ -375,6 +375,7 @@ int main(int argc, char *argv[]) {
       }
       MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     }
+    iteration++;
   }
   if(rank == 0){
     for(i = 0 ; i < size-1 ; i++){
