@@ -312,8 +312,11 @@ int main(int argc, char *argv[]) {
       printf("After Distributed node %d has %d elements and last element should be %d\n", rank, elements_count,*(index+elements_count-1));
       printf("After Distributed local vector has %d nodes and first one is %f while last one is %f\n",size-1, *vector, *(vector+size-2) );
     }
-
-
+    for( i = 0 ; i < elements_count ; i++){
+      int node_index = *(index+i);
+      float value = calculate_rank(val, col, row, node_index, vector);
+      *(vector+*(index+i)) = value;
+    }
   }
 
   MPI_Finalize();
