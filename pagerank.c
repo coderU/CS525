@@ -270,6 +270,7 @@ int main(int argc, char *argv[]) {
   // }
 
   float *vector = (float*)malloc((size-1)*sizeof(float));
+  int* index;
   for(i = 0 ; i < size-1; i++){
     *(vector+i) = 0;
   }
@@ -279,10 +280,14 @@ int main(int argc, char *argv[]) {
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+      MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
     }
   }else{
     MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     printf("After Distributed node %d has %d elements\n", rank, elements_count );
+    index = (int*)malloc(elements_count*sizeof(int));
+    MPI_Recv(index, elements_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
   }
 
   MPI_Finalize();
