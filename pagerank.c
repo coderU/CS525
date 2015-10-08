@@ -166,7 +166,6 @@ int main(int argc, char *argv[]) {
     if (line){
       free(line);
     }
-    MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
     // MPI_Bcast(&val, l_val_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
     //**************************************************************************
     //Seperate NODES
@@ -196,6 +195,8 @@ int main(int argc, char *argv[]) {
     //   int temp_row =
     // }
   }
+  if(rank == 0)
+    MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
   MPI_Barrier(MPI_COMM_WORLD);
   printf("%d: %d\n",rank, l_val_size -1);
