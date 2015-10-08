@@ -345,7 +345,7 @@ int main(int argc, char *argv[]) {
 
 
   int iteration = 1;
-  while(iteration < 5){
+  while(iteration < 10){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
@@ -389,7 +389,7 @@ int main(int argc, char *argv[]) {
           printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
       }
     }
-    printf("Total Time Cost: %ld\n", t2.tv_sec - t1.tv_sec);
+    printf("Total Time Cost: %ld secs\n", t2.tv_sec - t1.tv_sec);
   }
   MPI_Finalize();
 }
