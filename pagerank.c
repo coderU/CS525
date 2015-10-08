@@ -83,8 +83,6 @@ int calculate_diff(float* a, float* b, int size){
   int i = 0;
   for( i = 0 ; i < size ; i++){
     if((*(a+i)-*(b+i))>0.00001 || (*(a+i)-*(b+i))<-0.00001){
-      printf("%f %f\n",*(a+i),*(b+i) );
-
       return 0;
     }
   }
@@ -377,6 +375,7 @@ int main(int argc, char *argv[]) {
         MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         combine_vector(l_vector, t_vector, size-1);
       }
+      printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
       vector = l_vector;
     }
@@ -395,7 +394,7 @@ int main(int argc, char *argv[]) {
     MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
     iteration++;
     MPI_Barrier(MPI_COMM_WORLD);
-    
+
     // if(ok){
     //   break;
     // }
