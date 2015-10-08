@@ -341,7 +341,9 @@ int main(int argc, char *argv[]) {
   }
 
   if(rank == 0){
-    printf("After first iteration vector has %d nodes and first one is %f while last one is %f\n",size-1, *vector, *(vector+size-2) );
+    for(i = 0 ; i < size-1 ; i++){
+      printf("After first iteration vector has node: %d has value %f \n",i , *(vector+i));      
+    }
   }
 
 
