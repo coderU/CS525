@@ -77,7 +77,9 @@ int main(int argc, char *argv[]) {
   int l_val_size;
   int i, j;
   int part_count = 0;
-
+  int *subgraph_count;
+  int **subgraph;
+  int *subgraph_index;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -164,6 +166,28 @@ int main(int argc, char *argv[]) {
     if (line){
       free(line);
     }
+
+    subgraph_count = (int*)malloc((max+1)*sizeof(int));
+    subgraph_index = (int*)malloc((max+1)*sizeof(int));
+    subgraph = (int**)malloc((max+1)*sizeof(int*));
+    for(i = 0 ; i < (max+1) ; i++){
+      *(subgraph_count+i)=0;
+      *(subgraph_index+i)=0;
+    }
+
+    for(i = 0 ; i < part_count ; i++){
+      *(subgraph_count+*(part+i)) = *(subgraph_count+*(part+i))+1;
+    }
+
+    for(i = 0 ; i < (max+1) ; i++){
+      *(subgraph+i)=(int*)malloc(*(subgraph_count+i)*sizeof(int));
+    }
+
+    for(i = 0 ; i < part_count ; i++){
+      *(*(subgraph+i)+*(subgraph_index+i)) = i;
+      *(subgraph_index+i) = *(subgraph_index+i) + 1;
+    }
+
     //**************************************************************************
     //Seperate NODES
     // int final_count[(max+1)];
@@ -211,7 +235,7 @@ int main(int argc, char *argv[]) {
   MPI_Bcast(row, size, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&part_count, 1, MPI_INT, 0, MPI_COMM_WORLD);
   if(rank != 0){
-    part = (int*)malloc(part_count*sizeof(int));    
+    part = (int*)malloc(part_count*sizeof(int));
   }
 
   MPI_Bcast(part, part_count, MPI_INT, 0, MPI_COMM_WORLD);
@@ -222,7 +246,6 @@ int main(int argc, char *argv[]) {
     printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
     printf("%d: %d %d\n",rank, size -1, *(row+size-1));
     printf("%d: %d %d\n",rank, part_count -1, *(part+part_count-1));
-
     printf("**************************************************************************\n");
   }
   //**************************************************************************
@@ -231,12 +254,8 @@ int main(int argc, char *argv[]) {
   for( i = 0 ; i < size - 1; i ++){
     *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
   }
+
   printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
-  // for(i = 0 ; i < size - 1 ; i++){
-  //   for(j = 0 ; j < size - 1 ; j++){
-  //     *(*(matrix+i)+j) = 0;
-  //   }
-  // }
   for(i = 0 ; i < size - 1 ; i++){
     int start = *(row+i);
     int end = *(row+i+1);
@@ -245,7 +264,13 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  if(rank == 0){
+    for(i = 0 ; i < (max+1) ; i++){
 
+    }
+  }else{
+
+  }
 
   MPI_Finalize();
 }
