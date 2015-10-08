@@ -68,10 +68,10 @@ float calculate_rank(float* val, int* col, int* row, int node_index, float* vect
   for( i = start ; i < end ; i++){
     sum = sum + (*(val+i))*(*(vector+*(col+i)));
   }
-  if(sum/(start - end) != 0){
-    printf("aaaaa: %f\n", sum/(start - end));
-  }
-  return sum/(start - end);
+  // if(sum/(end - start) != 0){
+  //   printf("aaaaa: %f\n", sum/(start - end));
+  // }
+  return sum/(end - start);
 }
 
 void combine_vector(float* a, float* b, int size){
