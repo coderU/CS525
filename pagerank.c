@@ -220,7 +220,7 @@ int main(int argc, char *argv[]) {
   //**************************************************************************
   //CREATE MATRIX
   matrix = (float**)malloc((size-1)*sizeof(float*));
-  for( i = 0 ; i < size ; i ++){
+  for( i = 0 ; i < size - 1; i ++){
     *matrix = (float*)malloc((size-1)*sizeof(float));
   }
 
