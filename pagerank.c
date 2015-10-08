@@ -82,7 +82,7 @@ void combine_vector(float* a, float* b, int size){
 int calculate_diff(float* a, float* b, int size){
   int i = 0;
   for( i = 0 ; i < size ; i++){
-    if(*(a+i)-*(b+i)>0.00001){
+    if((*(a+i)-*(b+i))>0.00001){
       return 0;
     }
   }
@@ -355,7 +355,7 @@ int main(int argc, char *argv[]) {
 
 
   int iteration = 1;
-  int ok;
+  int ok = 0;
   while(iteration < 2){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
@@ -391,10 +391,10 @@ int main(int argc, char *argv[]) {
       MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     }
     MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    // if(ok){
-    //   break;
-    // }
     iteration++;
+    if(ok){
+      break;
+    }
   }
 
   if(rank == 0){
