@@ -356,7 +356,7 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok;
-  while(iteration < 100){
+  while(iteration < 3){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
@@ -391,9 +391,9 @@ int main(int argc, char *argv[]) {
       MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     }
     MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    if(ok){
-      break;
-    }
+    // if(ok){
+    //   break;
+    // }
     iteration++;
   }
 
