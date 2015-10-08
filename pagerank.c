@@ -283,7 +283,7 @@ int main(int argc, char *argv[]) {
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
       //TODO: SEND ONLY NECCESSERY
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
-      MPI_Send(vector, (size-1), MPI_INT, i, 0, MPI_COMM_WORLD);
+      MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
     }
   }
   else{
@@ -291,10 +291,10 @@ int main(int argc, char *argv[]) {
     index = (int*)malloc(elements_count*sizeof(int));
     MPI_Recv(index, elements_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
-    MPI_Recv(vector, (size-1), MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     if(DEBUG){
-      printf("After Distributed node %d has %d elements and last element should be %d, and first element of vector is %d\n", rank, elements_count,*(index+elements_count-1),*vector );
+      printf("After Distributed node %d has %d elements and last element should be %d\n", rank, elements_count,*(index+elements_count-1));
+      printf("After Distributed local vector has %d nodes and first one is %f\n",size-1, *vector );
     }
 
   }
