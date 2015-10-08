@@ -385,7 +385,7 @@ int main(int argc, char *argv[]) {
     gettimeofday(&t2, NULL);
     if(DEBUG){
       for(i = 0 ; i < size-1 ; i++){
-        if(*(vector+i)>=0.01)
+        if(*(vector+i)!=0)
           printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
       }
     }
