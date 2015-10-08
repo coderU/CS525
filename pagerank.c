@@ -342,7 +342,8 @@ int main(int argc, char *argv[]) {
 
   if(rank == 0){
     for(i = 0 ; i < size-1 ; i++){
-      printf("After first iteration vector has node: %d has value %f \n",i , *(vector+i));      
+      if(*(vector+i)!=0)
+        printf("After first iteration vector has node: %d has value %f \n",i , *(vector+i));      
     }
   }
 
