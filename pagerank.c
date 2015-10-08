@@ -221,7 +221,7 @@ int main(int argc, char *argv[]) {
   //CREATE MATRIX
   matrix = (float**)malloc((size-1)*sizeof(float*));
   for( i = 0 ; i < size - 1; i ++){
-    *matrix = (float*)malloc((size-1)*sizeof(float));
+    *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
   }
   printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
   printf("%f\n",*(*(matrix+1)+0) );
