@@ -278,19 +278,19 @@ int main(int argc, char *argv[]) {
   int elements_count;
   if(rank == 0){
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
-    for(i = 1 ; i < (max+1) ; i++){
+    for(i = 0 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
     }
-  }else{
+  }
+  // else{
     MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     index = (int*)malloc(elements_count*sizeof(int));
     MPI_Recv(index, elements_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
     if(DEBUG){
       printf("After Distributed node %d has %d elements and last element should be %d\n", rank, elements_count,*(index+elements_count-1) );
     }
-  }
+  // }
 
   MPI_Finalize();
 }
