@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <mpi.h>
 #include <string.h>
+#include <sys/time.h>
 
 #ifndef DEBUG
 #define DEBUG 1
@@ -97,6 +98,7 @@ int main(int argc, char *argv[]) {
   int *subgraph_count;
   int **subgraph;
   int *subgraph_index;
+  struct timeval t1, t2;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -318,6 +320,7 @@ int main(int argc, char *argv[]) {
       combine_vector(l_vector, t_vector, size-1);
     }
     vector = l_vector;
+    gettimeofday(&t1, NULL);
   }
   else{
     MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -377,11 +380,16 @@ int main(int argc, char *argv[]) {
     }
     iteration++;
   }
+
   if(rank == 0){
-    for(i = 0 ; i < size-1 ; i++){
-      if(*(vector+i)>=0.01)
-        printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
+    gettimeofday(&t2, NULL);
+    if(DEBUG){
+      for(i = 0 ; i < size-1 ; i++){
+        if(*(vector+i)>=0.01)
+          printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
+      }
     }
+    printf("Total Time Cost: %ld\n", t2.tv_sec - t1.tv_sec);
   }
   MPI_Finalize();
 }
