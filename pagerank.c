@@ -205,11 +205,19 @@ int main(int argc, char *argv[]) {
   }
   MPI_Bcast(col, l_val_size, MPI_INT, 0, MPI_COMM_WORLD);
 
+
+  MPI_Bcast(&size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  if(rank != 0){
+    row = (int *)malloc(size*sizeof(int));
+  }
+  MPI_Bcast(row, size, MPI_INT, 0, MPI_COMM_WORLD);
+
   MPI_Barrier(MPI_COMM_WORLD);
 
   if(DEBUG){
     printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
     printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
+    printf("%d: %d %d\n",rank, size -1, *(row+size-1));
 
     printf("**************************************************************************\n");
   }
