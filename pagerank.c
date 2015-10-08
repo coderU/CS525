@@ -68,11 +68,16 @@ int main(int argc, char *argv[]) {
   size_t len = 0;
   ssize_t read;
   float *val;
+  float *l_val;
   int *col;
+  int *l_col;
   int *row;
+  int *l_row;
   int *part;
   int max = 0;
   int size;
+  int l_size;
+  int l_val_size;
   int i;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
@@ -109,6 +114,7 @@ int main(int argc, char *argv[]) {
           printf("Need alloc %d for val\n", count-1 );
           printf("%d %f\n",(count -2), *(val+count-2));
         }
+        l_val_size = count - 1;
         break;
         case 1:
         col = (int *)malloc((count - 1)*sizeof(int));
@@ -160,34 +166,39 @@ int main(int argc, char *argv[]) {
     if (line){
       free(line);
     }
+
+    MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&val, l_val_size, MPI_INT, 0, MPI_COMM_WORLD);
     //**************************************************************************
     //Seperate NODES
-    int final_count[(max+1)];
-    for(i = 0 ; i < (max+1) ; i++){
-      final_count[i] = 0;
-    }
-    for(i = 0 ; i < part_count ; i++){
-      final_count[*(part+i)]++;
-    }
-    if(DEBUG){
-      for(i = 0 ; i < (max+1) ; i++){
-        printf("%d: %d\n",i, final_count[i]);
-      }
-    }
-    part_val = (float**)malloc((max+1)*sizeof(float*));
-    part_col = (int**)malloc((max+1)*sizeof(int*));
-    part_row = (int**)malloc((max+1)*sizeof(int*));
-
-    for(i = 0 ; i < (max+1) ; i++){
-      *(part_val+i) = (float*)malloc(final_count[i]*sizeof(float));
-      *(part_col+i) = (int*)malloc(final_count[i]*sizeof(int));
-      *(part_row+i) = (int*)malloc(final_count[i]*sizeof(int));
-    }
-
-    for(i = 0 ; i < part_count ; i++){
-      int temp_row = 
-    }
+    // int final_count[(max+1)];
+    // for(i = 0 ; i < (max+1) ; i++){
+    //   final_count[i] = 0;
+    // }
+    // for(i = 0 ; i < part_count ; i++){
+    //   final_count[*(part+i)]++;
+    // }
+    // if(DEBUG){
+    //   for(i = 0 ; i < (max+1) ; i++){
+    //     printf("%d: %d\n",i, final_count[i]);
+    //   }
+    // }
+    // part_val = (float**)malloc((max+1)*sizeof(float*));
+    // part_col = (int**)malloc((max+1)*sizeof(int*));
+    // part_row = (int**)malloc((max+1)*sizeof(int*));
+    //
+    // for(i = 0 ; i < (max+1) ; i++){
+    //   *(part_val+i) = (float*)malloc(final_count[i]*sizeof(float));
+    //   *(part_col+i) = (int*)malloc(final_count[i]*sizeof(int));
+    //   *(part_row+i) = (int*)malloc(final_count[i]*sizeof(int));
+    // }
+    //
+    // for(i = 0 ; i < part_count ; i++){
+    //   int temp_row =
+    // }
   }
+
+  printf("%d %f\n",(l_val_size -1), *(val+l_val_size-1));
 
   MPI_Finalize();
 }
