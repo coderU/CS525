@@ -198,7 +198,7 @@ int main(int argc, char *argv[]) {
     // }
   }
 
-  printf("%d %f\n",(l_val_size -1), *(val+l_val_size-1));
+  printf("%d: %d %f\n",rank, (l_val_size -1), *(val+l_val_size-1));
 
   MPI_Finalize();
 }
