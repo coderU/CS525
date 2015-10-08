@@ -198,7 +198,7 @@ int main(int argc, char *argv[]) {
   if(rank != 0){
     val = (float *)malloc(l_val_size*sizeof(float));
   }
-  MPI_Bcast(&val, l_val_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(val, l_val_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
 
   MPI_Barrier(MPI_COMM_WORLD);
