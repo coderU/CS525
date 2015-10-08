@@ -60,6 +60,17 @@ void sperate_by_space_i(int* array, char* line){
   }
 }
 
+float calculate_rank(float* val, int* col, int* row, int node_index, float* vector){
+  float sum = 0;
+  int start = *(row+node_index);
+  int end = *(row+node_index+1);
+  int i = 0;
+  for( i = start ; i < end ; i++){
+    sum = sum + (*(val+i))*(*(vector+*(col+i)));
+  }
+  return sum;
+}
+
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -285,6 +296,11 @@ int main(int argc, char *argv[]) {
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
     }
+    for( i = 0 ; i < *subgraph_count ; i++){
+      int node_index = *(*(subgraph+rank)+i);
+      float value = calculate_rank(val, col, row, node_index, vector);
+      *(vector+*(*(subgraph+rank)+i)) = value;
+    }
   }
   else{
     MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -296,6 +312,7 @@ int main(int argc, char *argv[]) {
       printf("After Distributed node %d has %d elements and last element should be %d\n", rank, elements_count,*(index+elements_count-1));
       printf("After Distributed local vector has %d nodes and first one is %f while last one is %f\n",size-1, *vector, *(vector+size-2) );
     }
+
 
   }
 
