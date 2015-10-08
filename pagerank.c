@@ -76,6 +76,8 @@ int main(int argc, char *argv[]) {
   int l_size;
   int l_val_size;
   int i, j;
+  int part_count = 0;
+
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -145,7 +147,6 @@ int main(int argc, char *argv[]) {
       return 0;
     }
     part = (int*)malloc(size*sizeof(int));
-    int part_count = 0;
     int current = 0;
     while ((read = getline(&line, &len, fp)) != -1) {
       if(*line == '\n'){
@@ -209,6 +210,8 @@ int main(int argc, char *argv[]) {
   }
   MPI_Bcast(row, size, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&part_count, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  part = (int*)malloc(part_count*sizeof(int));
+
   MPI_Bcast(part, part_count, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 
