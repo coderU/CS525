@@ -356,7 +356,7 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok;
-  while(iteration < 3){
+  while(iteration < 2){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
