@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
       free(line);
     }
 
-    MPI_Bcast(l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
     // MPI_Bcast(&val, l_val_size, MPI_INT, 0, MPI_COMM_WORLD);
     //**************************************************************************
     //Seperate NODES
@@ -198,9 +198,9 @@ int main(int argc, char *argv[]) {
     // }
   }
   else{
-    MPI_Bcast(l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    printf("%d: %d %f\n",rank, (l_val_size -1), *(val+l_val_size-1));
   }
-  printf("%d: %d %f\n",rank, (l_val_size -1), *(val+l_val_size-1));
 
   MPI_Finalize();
 }
