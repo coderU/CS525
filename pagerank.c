@@ -229,13 +229,13 @@ int main(int argc, char *argv[]) {
       *(*(matrix+i)+j) = 0;
     }
   }
-  for(i = 0 ; i < size - 1 ; i++){
-    int start = *(row+i);
-    int end = *(row+i+1);
-    for(j = start ; j < end ; j++){
-      *(*(matrix+i)+*(col+j)) = *(val+j);
-    }
-  }
+  // for(i = 0 ; i < size - 1 ; i++){
+  //   int start = *(row+i);
+  //   int end = *(row+i+1);
+  //   for(j = start ; j < end ; j++){
+  //     *(*(matrix+i)+*(col+j)) = *(val+j);
+  //   }
+  // }
 
   MPI_Finalize();
 }
