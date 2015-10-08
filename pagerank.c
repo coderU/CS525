@@ -71,6 +71,12 @@ float calculate_rank(float* val, int* col, int* row, int node_index, float* vect
   return sum/(start - end);
 }
 
+void combine_vector(float* a, float* b, int size){
+  int i = 0;
+  for( i = 0 ; i < size ; i++){
+    *(a+i) = *(a+i)+*(b+i);
+  }
+}
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -281,6 +287,9 @@ int main(int argc, char *argv[]) {
   // }
 
   float *vector = (float*)malloc((size-1)*sizeof(float));
+  float *t_vector = (float*)malloc((size-1)*sizeof(float));
+  float *l_vector = (float*)malloc((size-1)*sizeof(float));
+
   int* index;
   for(i = 0 ; i < size-1; i++){
     *(vector+i) = 0;
@@ -296,11 +305,19 @@ int main(int argc, char *argv[]) {
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
     }
+    for(i = 0 ; i < size -1 ; i++){
+      *(l_vector+i)=0;
+    }
     for( i = 0 ; i < *subgraph_count ; i++){
       int node_index = *(*(subgraph+rank)+i);
       float value = calculate_rank(val, col, row, node_index, vector);
-      *(vector+*(*(subgraph+rank)+i)) = value;
+      *(l_vector+*(*(subgraph+rank)+i)) = value;
     }
+    for(i = 1 ; i < (max+1) ; i++){
+      MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      combine_vector(l_vector, t_vector, size-1);
+    }
+    vector = l_vector;
   }
   else{
     MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -308,6 +325,9 @@ int main(int argc, char *argv[]) {
     MPI_Recv(index, elements_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    for(i = 0 ; i < size -1 ; i++){
+      *(l_vector+i)=0;
+    }
     if(DEBUG){
       printf("After Distributed node %d has %d elements and last element should be %d\n", rank, elements_count,*(index+elements_count-1));
       printf("After Distributed local vector has %d nodes and first one is %f while last one is %f\n",size-1, *vector, *(vector+size-2) );
@@ -315,9 +335,15 @@ int main(int argc, char *argv[]) {
     for( i = 0 ; i < elements_count ; i++){
       int node_index = *(index+i);
       float value = calculate_rank(val, col, row, node_index, vector);
-      *(vector+*(index+i)) = value;
+      *(l_vector+*(index+i)) = value;
     }
+    MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
   }
+
+  if(rank == 0){
+    printf("After first iteration vector has %d nodes and first one is %f while last one is %f\n",size-1, *vector, *(vector+size-2) );
+  }
+
 
   MPI_Finalize();
 }
