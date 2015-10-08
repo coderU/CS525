@@ -233,7 +233,8 @@ int main(int argc, char *argv[]) {
     int start = *(row+i);
     int end = *(row+i+1);
     for(j = start ; j < end ; j++){
-      *(*(matrix+i)+*(col+j-start)) = *(val+j);
+      *(*(matrix+i)+*(col+j)) = *(val+j);
+      printf("%d %d\n", i, *(col+j));
     }
   }
 
