@@ -68,9 +68,6 @@ float calculate_rank(float* val, int* col, int* row, int node_index, float* vect
   for( i = start ; i < end ; i++){
     sum = sum + (*(val+i))*(*(vector+*(col+i)));
   }
-  // if(sum/(end - start) != 0){
-  //   printf("aaaaa: %f\n", sum/(start - end));
-  // }
   return sum/(end - start);
 }
 
@@ -343,13 +340,47 @@ int main(int argc, char *argv[]) {
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
   }
 
+
+  int iteration = 1;
+  while(iteration < 5){
+    if(rank == 0){
+      //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
+      for(i = 1 ; i < (max+1) ; i++){
+        //TODO: SEND ONLY NECCESSERY
+        MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
+      }
+      for(i = 0 ; i < size -1 ; i++){
+        *(l_vector+i)=0;
+      }
+      for( i = 0 ; i < *subgraph_count ; i++){
+        int node_index = *(*(subgraph+rank)+i);
+        float value = calculate_rank(val, col, row, node_index, vector);
+        *(l_vector+*(*(subgraph+rank)+i)) = value;
+      }
+      for(i = 1 ; i < (max+1) ; i++){
+        MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        combine_vector(l_vector, t_vector, size-1);
+      }
+      vector = l_vector;
+    }
+    else{
+      MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      for(i = 0 ; i < size -1 ; i++){
+        *(l_vector+i)=0;
+      }
+      for( i = 0 ; i < elements_count ; i++){
+        int node_index = *(index+i);
+        float value = calculate_rank(val, col, row, node_index, vector);
+        *(l_vector+*(index+i)) = value;
+      }
+      MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+    }
+  }
   if(rank == 0){
     for(i = 0 ; i < size-1 ; i++){
       if(*(vector+i)!=0)
-        printf("After first iteration vector has node: %d has value %f \n",i , *(vector+i));
+        printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
     }
   }
-
-
   MPI_Finalize();
 }
