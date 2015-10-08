@@ -68,17 +68,14 @@ int main(int argc, char *argv[]) {
   size_t len = 0;
   ssize_t read;
   float *val;
-  float *l_val;
   int *col;
-  int *l_col;
   int *row;
-  int *l_row;
   int *part;
   int max = 0;
   int size;
   int l_size;
   int l_val_size;
-  int i;
+  int i, j;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -218,11 +215,27 @@ int main(int argc, char *argv[]) {
     printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
     printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
     printf("%d: %d %d\n",rank, size -1, *(row+size-1));
-
     printf("**************************************************************************\n");
   }
+  //**************************************************************************
+  //CREATE MATRIX
+  matrix = (float**)malloc((size-1)*sizeof(float*));
+  for( i = 0 ; i < size ; i ++){
+    *matrix = (float*)malloc((size-1)*sizeof(float));
+  }
 
-
+  for(i = 0 ; i < size - 1 ; i++){
+    for(j = 0 ; j < size - 1 ; j++){
+      *(*(matrix+i)+j) = 0;
+    }
+  }
+  for(i = 0 ; i < size - 1 ; i++){
+    int start = *(row+i);
+    int end = *(row+i+1);
+    for(j = start ; j < end ; j++){
+      *(*(matrix+i)+*(col+j)) = *(val+j);
+    }
+  }
 
   MPI_Finalize();
 }
