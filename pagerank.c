@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
       printf("%d\n", count);
       switch (num) {
         case 0:
-        val = (float *)malloc((count - 1)*sizeof(int));
+        val = (float *)malloc((count - 1)*sizeof(float));
         sperate_by_space_f(val, line);
         if(DEBUG){
           printf("Need alloc %d for val\n", count-1 );
@@ -166,7 +166,6 @@ int main(int argc, char *argv[]) {
     if (line){
       free(line);
     }
-    // MPI_Bcast(&val, l_val_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
     //**************************************************************************
     //Seperate NODES
     // int final_count[(max+1)];
@@ -195,8 +194,12 @@ int main(int argc, char *argv[]) {
     //   int temp_row =
     // }
   }
-  if(rank == 0)
-    MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&l_val_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  if(rank != 0){
+    val = (float *)malloc(l_val_size*sizeof(float));
+  }
+  MPI_Bcast(&val, l_val_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
+
 
   MPI_Barrier(MPI_COMM_WORLD);
   printf("%d: %d\n",rank, l_val_size -1);
