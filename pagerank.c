@@ -224,11 +224,13 @@ int main(int argc, char *argv[]) {
     *matrix = (float*)malloc((size-1)*sizeof(float));
   }
 
-  // for(i = 0 ; i < size - 1 ; i++){
-  //   for(j = 0 ; j < size - 1 ; j++){
-  //     *(*(matrix+i)+j) = 0;
-  //   }
-  // }
+  for(i = 0 ; i < size - 1 ; i++){
+    for(j = 0 ; j < size - 1 ; j++){
+      printf("%f \n", *(*(matrix+i)+j));
+      // *(*(matrix+i)+j) = 0;
+    }
+    printf("\n");
+  }
   // for(i = 0 ; i < size - 1 ; i++){
   //   int start = *(row+i);
   //   int end = *(row+i+1);
