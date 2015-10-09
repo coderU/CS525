@@ -303,17 +303,17 @@ int main(int argc, char *argv[]) {
   MPI_Bcast(part, part_count, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(DEBUG){
-    printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
-    printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
-    printf("%d: %d %d\n",rank, size -1, *(row+size-1));
-    printf("%d: %d %d\n",rank, part_count -1, *(part+part_count-1));
-    printf("**************************************************************************\n");
-  }
+  // if(DEBUG){
+  //   printf("%d: %d %f\n",rank, l_val_size -1, *(val+l_val_size-1));
+  //   printf("%d: %d %d\n",rank, l_val_size -1, *(col+l_val_size-1));
+  //   printf("%d: %d %d\n",rank, size -1, *(row+size-1));
+  //   printf("%d: %d %d\n",rank, part_count -1, *(part+part_count-1));
+  //   printf("**************************************************************************\n");
+  // }
   //**************************************************************************
   //CREATE MATRIX
-  printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
   if(rank == 0){
+    printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
     matrix = (float**)malloc((size-1)*sizeof(float*));
     for( i = 0 ; i < size - 1; i ++){
       *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
