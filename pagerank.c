@@ -512,6 +512,7 @@ int main(int argc, char *argv[]) {
   int ok = 0;
   while(1 < 3){
     if(rank == 0){
+      printf("aaaaaaaaaaaaaa\n");
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
         //TODO: SEND ONLY NECCESSERY
