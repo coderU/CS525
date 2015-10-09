@@ -359,6 +359,9 @@ int main(int argc, char *argv[]) {
     }
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
     for(i = 1 ; i < (max+1) ; i++){
+        if(rank == 0)
+          printf("*********************dasdasdasdasd**********************************\n" );
+
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
       //TODO: SEND ONLY NECCESSERY
@@ -368,9 +371,6 @@ int main(int argc, char *argv[]) {
     for(i = 0 ; i < size -1 ; i++){
       *(l_vector+i)=0;
     }
-
-    if(rank == 0)
-      printf("*********************dasdasdasdasd**********************************\n" );
 
     for( i = 0 ; i < *subgraph_count ; i++){
       int node_index = *(*(subgraph+rank)+i);
