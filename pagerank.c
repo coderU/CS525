@@ -358,7 +358,7 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok = 0;
-  while(iteration < 10){
+  while(iteration < 2){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
@@ -411,7 +411,7 @@ int main(int argc, char *argv[]) {
     gettimeofday(&t2, NULL);
     if(DEBUG){
       for(i = 0 ; i < size-1 ; i++){
-        if(i <= 54 && i >= 24)
+        if(*(vector+i)>0.00001)
           printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
       }
     }
