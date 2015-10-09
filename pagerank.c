@@ -9,7 +9,7 @@
 #endif
 
 #ifndef SMALLMATRIX
-#define SMALLMATRIX 1
+#define SMALLMATRIX 0
 #endif
 
 void sperate_by_space_f(float* array, char* line){
@@ -253,9 +253,6 @@ int main(int argc, char *argv[]) {
     }
     for(i = 0 ; i < l_val_size; i++){
       *(val+i) = *(val+i)/temp[*(col+i)];
-    }
-    for( i = 0 ; i < size -1 ; i++){
-      printf("Colm %d has %d\n", i, temp[i]);
     }
     //**************************************************************************
     //Seperate NODES
