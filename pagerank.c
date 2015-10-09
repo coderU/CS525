@@ -343,9 +343,6 @@ int main(int argc, char *argv[]) {
     }
   }
 
-if(rank == 0)
-  printf("*********************dasdasdasdasd**********************************\n" );
-
   float *vector = (float*)malloc((size-1)*sizeof(float));
   float *t_vector = (float*)malloc((size-1)*sizeof(float));
   float *l_vector = (float*)malloc((size-1)*sizeof(float));
@@ -356,6 +353,10 @@ if(rank == 0)
   }
   *vector = 1;
   int elements_count;
+
+  if(rank == 0)
+    printf("*********************dasdasdasdasd**********************************\n" );
+
   if(rank == 0){
     if(DEBUG){
       print_vector(vector, size-1);
