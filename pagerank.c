@@ -454,6 +454,7 @@ int main(int argc, char *argv[]) {
     }
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      printf("SUCCESS %d\n",i );
       combine_vector(l_vector, t_vector, size-1);
     }
     my_memcpy(vector,l_vector,size-1);
