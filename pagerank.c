@@ -422,9 +422,8 @@ int main(int argc, char *argv[]) {
       MPI_Send(&neccessery_count, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(&neccessery, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
       float temp_value[neccessery_count];
-      for(i = 0 ; i < neccessery_count ; i++){
-        temp_value[i] = *(val+neccessery[i]);
-        fprintf(stderr, "%d\n",i );
+      for(j = 0 ; j < neccessery_count ; j++){
+        temp_value[j] = *(val+neccessery[j]);
       }
       MPI_Send(&temp_value, neccessery_count, MPI_FLOAT, i, 0, MPI_COMM_WORLD);
 
