@@ -404,11 +404,8 @@ int main(int argc, char *argv[]) {
       for(j = 0 ; j < *(subgraph_count + i); j++){
         int start = *(row+ *(*(subgraph+i)+j) );
         int end = *(row+*(*(subgraph+i)+j)+1);
-        printf("NODE %d has start %d end %d\n",i,start, end );
         for(k = start ; k < end ; k++){
           temp_array[*(col+k)] = 1;
-          printf("NODE %d MARK %d\n",i, *(col+k));
-
         }
       }
       neccessery_count = 0;
@@ -513,7 +510,7 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok = 0;
-  while(1){
+  while(iteration < 3){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
@@ -571,8 +568,6 @@ int main(int argc, char *argv[]) {
         *(vector+i) = neccessery_vector[i];
       }
       // printf("TEST: %f %f\n", *(vector+616), neccessery_vector[616]);
-      printf("*******************---%d---*************************\n", iteration);
-      print_vector_t(vector, size-1);
       for(i = 0 ; i < size -1 ; i++){
         *(l_vector+i)=0;
       }
