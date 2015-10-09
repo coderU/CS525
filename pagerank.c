@@ -131,8 +131,8 @@ int main(int argc, char *argv[]) {
   int **subgraph;
   int *subgraph_index;
   struct timeval t1, t2;
-  if(argc != 0){
-    printf("ARGC %d\n", argc);
+  if(argc != 3){
+    printf("USAGE: mpirun -machinefile machines -np *Number of partition* pagerank *graph-file* *graph-partition-file*\n", argc);
     exit(-1);
   }
   MPI_Init(&argc, &argv);
