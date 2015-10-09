@@ -332,6 +332,8 @@ int main(int argc, char *argv[]) {
       combine_vector(l_vector, t_vector, size-1);
     }
     memcpy(vector,l_vector,size-1);
+    printf("After %d iteration vector node: %d has value %f \n", 1, 196498 , *(vector+196498));
+    
     gettimeofday(&t1, NULL);
   }
   else{
@@ -355,7 +357,6 @@ int main(int argc, char *argv[]) {
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
   }
 
-  printf("After %d iteration vector node: %d has value %f \n", 1, 196498 , *(vector+196498));
 
   int iteration = 1;
   int ok = 0;
