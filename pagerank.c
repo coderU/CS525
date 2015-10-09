@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
   int *subgraph_index;
   struct timeval t1, t2;
   if(argc != 3){
-    printf("USAGE: mpirun -machinefile machines -np *Number of partition* pagerank *graph-file* *graph-partition-file*\n", argc);
+    printf("USAGE: mpirun -machinefile machines -np *Number of partition* pagerank *graph-file* *graph-partition-file*\n");
     if(DEBUG){
       printf("GRAPH-FILE: %s\n", *(argv+1));
       printf("GRAPH-PARTITION-FILE: %s\n", *(argv+2));
