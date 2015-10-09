@@ -404,6 +404,7 @@ int main(int argc, char *argv[]) {
       for(j = 0 ; j < *(subgraph_count + i); j++){
         int start = *(row+ *(*(subgraph)+j) );
         int end = *(row+*(*(subgraph)+j)+1);
+        printf("NODE %d has start %d end %d\n",i,start, end );
         for(k = start ; k < end ; k++){
           temp_array[*(col+k)] = 1;
           printf("NODE %d MARK %d\n",i, *(col+k));
