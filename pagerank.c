@@ -75,7 +75,7 @@ float calculate_rank(float* val, int* col, int* row, int node_index, float* vect
     sum = sum + (*(val+i))*(*(vector+*(col+i)));
   }
 
-  return sum/(end - start);
+  return sum;
 
 }
 
