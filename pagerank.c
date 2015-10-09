@@ -400,7 +400,7 @@ int main(int argc, char *argv[]) {
       }
       if(DEBUG){
         printf("SEND-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", i, neccessery_count);
-        printf("SEND-----Process: %d WILL HAVE FIRST NECCESSERY ELEMENT: %d\n",i, neccessery[0] );
+        printf("SEND-----Process: %d WILL HAVE LAST NECCESSERY ELEMENT: %d\n",i, neccessery[neccessery_count-1] );
       }
       MPI_Send(&neccessery_count, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(&neccessery, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
@@ -441,7 +441,7 @@ int main(int argc, char *argv[]) {
 
     if(DEBUG){
       printf("RCV-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", rank, neccessery_count);
-      printf("RCV-----Process: %d WILL HAVE FIRST NECCESSERY ELEMENT: %d\n",rank, l_neccessery[0] );
+      printf("RCV-----Process: %d WILL HAVE LAST NECCESSERY ELEMENT: %d\n",rank, l_neccessery[neccessery_count-1] );
     }
     MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
