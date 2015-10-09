@@ -97,6 +97,12 @@ void my_memcpy(float* dst, float* src, int size){
     *(dst+i) = *(src+i);
   }
 }
+void print_vector(float* a, int size){
+  int i = 0 ;
+  for( i = 0 ; i < size ; i++){
+    printf("%dth node of vector have value: %f\n", i , *(a+i) );
+  }
+}
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -332,6 +338,7 @@ int main(int argc, char *argv[]) {
   *vector = 1;
   int elements_count;
   if(rank == 0){
+    print_vector(vector, size-1);
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
