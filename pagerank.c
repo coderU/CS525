@@ -406,9 +406,6 @@ int main(int argc, char *argv[]) {
       }
 
       for(j = 0 ; j < *(subgraph_count + i); j++){
-        if(i == 7){
-          printf("aaaaaaaaaaaaa %d %d %d\n", *(subgraph_count + i) , j, *(*(subgraph+i)+j) );
-        }
         int start = *(row+ *(*(subgraph+i)+j) );
         int end = *(row+ *(*(subgraph+i)+j) + 1);
 
