@@ -418,7 +418,10 @@ int main(int argc, char *argv[]) {
         printf("SEND-----Process: %d WILL HAVE LAST NECCESSERY ELEMENT: %d\n",i, neccessery[neccessery_count-1] );
       }
       *(root_neccessery_count+i) = neccessery_count;
-      *(root_neccessery+i) = neccessery;
+      *(root_neccessery+i) = (int*)malloc(neccessery_count*sizeof(int));
+      for(j = 0 ; j < neccessery_count ; j++){
+        *(*(root_neccessery+i)+j)=neccessery[j]
+      }
       MPI_Send(&neccessery_count, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(&neccessery, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
       float temp_value[neccessery_count];
