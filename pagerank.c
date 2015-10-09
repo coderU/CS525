@@ -384,7 +384,7 @@ int main(int argc, char *argv[]) {
           temp_array[*(col+k)] = 1;
         }
       }
-
+      neccessery_count = 0;
       for( j = 0 ; j < size -1 ; j++){
         if(temp_array[j] != 0){
           neccessery_count++;
