@@ -438,7 +438,9 @@ int main(int argc, char *argv[]) {
       ok = calculate_diff(vector,l_vector, size-1);
       my_memcpy(vector,l_vector,size-1);
       if(DEBUG){
-        printf("*******************---%d---*************************\n", iteration);
+        if(SMALLMATRIX){
+          printf("*******************---%d---*************************\n", iteration);
+        }
         print_vector(vector, size-1);
       }
 
