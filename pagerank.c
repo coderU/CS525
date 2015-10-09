@@ -367,7 +367,7 @@ int main(int argc, char *argv[]) {
       for(i = 0 ; i < size -1 ; i++){
         *(l_vector+i)=0;
       }
-      printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498));
+      printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(t_vector+196498), *(l_vector+196498));
 
       for( i = 0 ; i < *subgraph_count ; i++){
         int node_index = *(*(subgraph+rank)+i);
