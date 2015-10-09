@@ -504,11 +504,12 @@ int main(int argc, char *argv[]) {
       for(i = 1 ; i < (max+1) ; i++){
         //TODO: SEND ONLY NECCESSERY
         neccessery_count = *(root_neccessery_count+i);
+        printf("Count: %d LAST: %d\n",neccessery_count,*(*(root_neccessery+i)+neccessery_count-1) );
+        
         float temp_value[neccessery_count];
         for(j = 0 ; j < neccessery_count ; j++){
           temp_value[j] = *(vector+*(*(root_neccessery+i)+j));
         }
-        printf("Count: %d LAST: %d\n",neccessery_count,*(*(root_neccessery+i)+neccessery_count-1) );
         MPI_Send(&temp_value, neccessery_count, MPI_FLOAT, i, 0, MPI_COMM_WORLD);
 
         //***************
