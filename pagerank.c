@@ -133,6 +133,10 @@ int main(int argc, char *argv[]) {
   struct timeval t1, t2;
   if(argc != 3){
     printf("USAGE: mpirun -machinefile machines -np *Number of partition* pagerank *graph-file* *graph-partition-file*\n", argc);
+    if(DEBUG){
+      printf("GRAPH-FILE: %s\n", argv+1);
+      printf("GRAPH-PARTITION-FILE: %s\n", argv+2);
+    }
     exit(-1);
   }
   MPI_Init(&argc, &argv);
