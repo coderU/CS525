@@ -9,7 +9,7 @@
 #endif
 
 #ifndef SMALLMATRIX
-#define SMALLMATRIX 1
+#define SMALLMATRIX 0
 #endif
 
 void sperate_by_space_f(float* array, char* line){
