@@ -558,7 +558,7 @@ int main(int argc, char *argv[]) {
       for( i = 0 ; i < size -1 ; i++){
         *(vector+i) = neccessery_vector[i];
       }
-      printf("TEST: %f\n", *(vector+616));
+      printf("TEST: %f %f\n", *(vector+616), neccessery_vector[616]);
       for(i = 0 ; i < size -1 ; i++){
         *(l_vector+i)=0;
       }
