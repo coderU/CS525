@@ -423,7 +423,7 @@ int main(int argc, char *argv[]) {
       MPI_Send(&neccessery, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
       float temp_value[neccessery_count];
       for(j = 0 ; j < neccessery_count ; j++){
-        temp_value[j] = *(val+neccessery[j]);
+        temp_value[j] = *(vector+neccessery[j]);
       }
       MPI_Send(&temp_value, neccessery_count, MPI_FLOAT, i, 0, MPI_COMM_WORLD);
 
