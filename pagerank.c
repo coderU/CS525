@@ -353,10 +353,6 @@ int main(int argc, char *argv[]) {
   }
   *vector = 1;
   int elements_count;
-
-  if(rank == 0)
-    printf("*********************dasdasdasdasd**********************************\n" );
-
   if(rank == 0){
     if(DEBUG){
       print_vector(vector, size-1);
@@ -372,6 +368,10 @@ int main(int argc, char *argv[]) {
     for(i = 0 ; i < size -1 ; i++){
       *(l_vector+i)=0;
     }
+
+    if(rank == 0)
+      printf("*********************dasdasdasdasd**********************************\n" );
+
     for( i = 0 ; i < *subgraph_count ; i++){
       int node_index = *(*(subgraph+rank)+i);
       float value = calculate_rank(val, col, row, node_index, vector,1);
