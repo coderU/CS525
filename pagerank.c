@@ -61,7 +61,7 @@ void sperate_by_space_i(int* array, char* line){
   }
 }
 
-float calculate_rank(float* val, int* col, int* row, int node_index, float* vector){
+float calculate_rank(float* val, int* col, int* row, int node_index, float* vector, int flag){
   float sum = 0;
   int start = *(row+node_index);
   int end = *(row+node_index+1);
@@ -69,7 +69,11 @@ float calculate_rank(float* val, int* col, int* row, int node_index, float* vect
   for( i = start ; i < end ; i++){
     sum = sum + (*(val+i))*(*(vector+*(col+i)));
   }
-  return sum/(end - start);
+  if(flag){
+    return sum/(end - start);
+  }
+  return sum;
+
 }
 
 void combine_vector(float* a, float* b, int size){
@@ -322,7 +326,7 @@ int main(int argc, char *argv[]) {
     }
     for( i = 0 ; i < *subgraph_count ; i++){
       int node_index = *(*(subgraph+rank)+i);
-      float value = calculate_rank(val, col, row, node_index, vector);
+      float value = calculate_rank(val, col, row, node_index, vector,1);
       *(l_vector+*(*(subgraph+rank)+i)) = value;
     }
     for(i = 1 ; i < (max+1) ; i++){
@@ -347,7 +351,7 @@ int main(int argc, char *argv[]) {
     }
     for( i = 0 ; i < elements_count ; i++){
       int node_index = *(index+i);
-      float value = calculate_rank(val, col, row, node_index, vector);
+      float value = calculate_rank(val, col, row, node_index, vector,1);
       *(l_vector+*(index+i)) = value;
     }
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
@@ -370,7 +374,7 @@ int main(int argc, char *argv[]) {
 
       for( i = 0 ; i < *subgraph_count ; i++){
         int node_index = *(*(subgraph+rank)+i);
-        float value = calculate_rank(val, col, row, node_index, vector);
+        float value = calculate_rank(val, col, row, node_index, vector,0);
         *(l_vector+*(*(subgraph+rank)+i)) = value;
       }
       for(i = 1 ; i < (max+1) ; i++){
@@ -391,7 +395,7 @@ int main(int argc, char *argv[]) {
       }
       for( i = 0 ; i < elements_count ; i++){
         int node_index = *(index+i);
-        float value = calculate_rank(val, col, row, node_index, vector);
+        float value = calculate_rank(val, col, row, node_index, vector,0);
         *(l_vector+*(index+i)) = value;
       }
       MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
