@@ -377,6 +377,7 @@ int main(int argc, char *argv[]) {
         float value = calculate_rank(val, col, row, node_index, vector,0);
         *(l_vector+*(*(subgraph+rank)+i)) = value;
       }
+
       for(i = 1 ; i < (max+1) ; i++){
         MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         combine_vector(l_vector, t_vector, size-1);
@@ -385,6 +386,8 @@ int main(int argc, char *argv[]) {
       printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
       memcpy(vector,l_vector,size-1);
+      printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
+      
       // printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498) );
 
     }
