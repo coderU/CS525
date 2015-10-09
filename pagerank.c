@@ -38,6 +38,16 @@ void sperate_by_space_f(float* array, char* line){
   }
 }
 
+void compare_vector(float* a, float* b, int size, int rank){
+  int i = 0 ;
+  for(i = 0 ; i < size ; i++){
+    if(*(a+i) != *(b+i)){
+      printf("Process %d has Node %d different: Correct: %f Current: %f\n",rank, i , *(a+i),*(b+i) );
+      return;
+    }
+  }
+  printf("Process %d has the same vectors\n", rank);
+}
 
 void sperate_by_space_i(int* array, char* line){
   int i=0,j=0, flag = 0;
@@ -134,6 +144,9 @@ int main(int argc, char *argv[]) {
   struct timeval t1, t2;
   int neccessery_count = 0;
   int *l_neccessery;
+  int* root_neccessery_count;
+  int** root_neccessery;
+  float *neccessery_value;
   if(argc != 3){
     printf("USAGE: mpirun -machinefile machines -np *Number of partition* pagerank *graph-file* *graph-partition-file*\n");
     if(DEBUG){
@@ -369,6 +382,8 @@ int main(int argc, char *argv[]) {
       print_vector(vector, size-1);
     }
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
+    root_neccessery_count = (int*)malloc((max+1)*sizeof(int));
+    root_neccessery = (int**)malloc((max+1)*sizeof(int*));
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
@@ -402,8 +417,16 @@ int main(int argc, char *argv[]) {
         printf("SEND-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", i, neccessery_count);
         printf("SEND-----Process: %d WILL HAVE LAST NECCESSERY ELEMENT: %d\n",i, neccessery[neccessery_count-1] );
       }
+      *(root_neccessery_count+i) = neccessery_count;
+      *(root_neccessery+i) = neccessery;
       MPI_Send(&neccessery_count, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(&neccessery, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
+      float temp_value[neccessery_count];
+      for(i = 0 ; i < neccessery_count ; i++){
+        temp_value[i] = *(val+neccessery[i]);
+      }
+      MPI_Send(&temp_value, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
+
       //********************************
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
@@ -438,13 +461,24 @@ int main(int argc, char *argv[]) {
     MPI_Recv(&neccessery_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     l_neccessery = (int*)malloc(neccessery_count*sizeof(int));
     MPI_Recv(l_neccessery, neccessery_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
+    neccessery_value = (float*)malloc(neccessery_count*sizeof(int));
+    MPI_Recv(neccessery_value, neccessery_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    float neccessery_vector[size-1];
+    for(i = 0 ; i < (size -1 ); i++){
+      neccessery_vector[i] = 0;
+    }
+    for( i = 0 ; i < neccessery_count ; i++){
+      neccessery_vector[*(l_neccessery+i)] = *(neccessery_value+i);
+    }
     if(DEBUG){
       printf("RCV-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", rank, neccessery_count);
       printf("RCV-----Process: %d WILL HAVE LAST NECCESSERY ELEMENT: %d\n",rank, l_neccessery[neccessery_count-1] );
     }
     MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    if(DEBUG){
+      compare_vector(vector, neccessery_vector,size-1,rank);
+    }
     for(i = 0 ; i < size -1 ; i++){
       *(l_vector+i)=0;
     }
