@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
   int size;
   int l_size;
   int l_val_size;
-  int i, j;
+  int i, j, k;
   int part_count = 0;
   int *subgraph_count;
   int **subgraph;
@@ -243,7 +243,7 @@ int main(int argc, char *argv[]) {
       printf("Node %d has: %d elements\n",i, *(subgraph_count+i) );
     }
     for(i = 0 ; i < (max+1) ; i++){
-      *(subgraph+i)=(int*)malloc(*(subgraph_count+i)*sizeof(int));
+      *(subgraph+i)=(int*)malloc(*(subgraph_count)*sizeof(int));
     }
 
     for(i = 0 ; i < part_count ; i++){
@@ -394,6 +394,33 @@ int main(int argc, char *argv[]) {
       print_vector(vector, size-1);
     }
 
+    for(i = 1 ; i < (max+1) ; i++){
+      int temp_array[size - 1];
+      for(j = 0 ; j < size -1 ; j++){
+        temp_array[j] = 0;
+      }
+      for(j = 0 ; j < *(subgraph_count + i); j++){
+        int start = *(row+ *(*(subgraph)+j) );
+        int end = *(row+*(*(subgraph)+j)+1);
+        for(k = start ; k < end ; k++){
+          temp_array[*(col+k)] = 1;
+        }
+      }
+      int neccessery_count = 0;
+      for( j = 0 ; j < size -1 ; j++){
+        if(temp_array[j] != 0){
+          neccessery_count++;
+        }
+      }
+
+      int neccessery[neccessery_count];
+      int neccessery_index = 0;
+      for( j = 0 ; j < size -1 ; j++){
+        if(temp_array[j] != 0){
+          neccessery[neccessery_index++] = j;
+        }
+      }
+    }
     gettimeofday(&t1, NULL);
   }
   else{
