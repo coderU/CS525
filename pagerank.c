@@ -440,7 +440,6 @@ int main(int argc, char *argv[]) {
       // MPI_Send(&temp_value, neccessery_count, MPI_FLOAT, i, 0, MPI_COMM_WORLD);
 
       //********************************
-      printf("aaaaaaaaaaaaaaaaaaaaaaa %d\n",i );
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
     }
@@ -595,7 +594,7 @@ int main(int argc, char *argv[]) {
     if(DEBUG){
       for(i = 0 ; i < size-1 ; i++){
         // if(*(vector+i)>0.00001)
-        if(i <= 54 && i >= 23)
+        if(i <= 10 && i >= 0)
           printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
       }
     }
