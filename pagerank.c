@@ -401,8 +401,7 @@ int main(int argc, char *argv[]) {
       for(j = 0 ; j < size -1 ; j++){
         temp_array[j] = 0;
       }
-      printf("aaaaaaaaaaaaaaaaaaaaaa %d\n",i );
-      
+
       for(j = 0 ; j < *(subgraph_count + i); j++){
         int start = *(row+ *(*(subgraph+i)+j) );
         int end = *(row+*(*(subgraph+i)+j)+1);
@@ -410,6 +409,8 @@ int main(int argc, char *argv[]) {
           temp_array[*(col+k)] = 1;
         }
       }
+      printf("aaaaaaaaaaaaaaaaaaaaaa %d\n",i );
+      
       neccessery_count = 0;
       for( j = 0 ; j < size -1 ; j++){
         if(temp_array[j] != 0){
