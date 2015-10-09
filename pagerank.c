@@ -508,6 +508,7 @@ int main(int argc, char *argv[]) {
         for(j = 0 ; j < neccessery_count ; j++){
           temp_value[j] = *(vector+*(*(root_neccessery+i)+j));
         }
+        printf("Count: %d LAST: %d\n",neccessery_count,temp_value[neccessery_count-1] );
         MPI_Send(&temp_value, neccessery_count, MPI_FLOAT, i, 0, MPI_COMM_WORLD);
 
         //***************
