@@ -120,6 +120,13 @@ void print_vector(float* a, int size){
     }
   }
 }
+
+void print_vector_t(float* a, int size){
+    int i = 0 ;
+    for( i = 0 ; i < size ; i++){
+      printf("%dth node of vector have value: %f\n", i , *(a+i) );
+    }
+}
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -559,7 +566,8 @@ int main(int argc, char *argv[]) {
         *(vector+i) = neccessery_vector[i];
       }
       // printf("TEST: %f %f\n", *(vector+616), neccessery_vector[616]);
-
+      printf("*******************---%d---*************************\n", iteration);
+      print_vector_t(vector, size-1);
       for(i = 0 ; i < size -1 ; i++){
         *(l_vector+i)=0;
       }
