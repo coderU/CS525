@@ -133,6 +133,7 @@ int main(int argc, char *argv[]) {
   float* send;
   struct timeval t1, t2;
   int neccessery_count = 0;
+  int *l_neccessery;
   if(argc != 3){
     printf("USAGE: mpirun -machinefile machines -np *Number of partition* pagerank *graph-file* *graph-partition-file*\n");
     if(DEBUG){
@@ -399,8 +400,10 @@ int main(int argc, char *argv[]) {
       }
       if(DEBUG){
         printf("SEND-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", i, neccessery_count);
+        printf("SEND-----Process: %d WILL HAVE FIRST NECCESSERY ELEMENT: %d\n",i, neccessery[0] );
       }
       MPI_Send(&neccessery_count, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+      MPI_Send(&neccessery, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
       //********************************
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
@@ -433,8 +436,12 @@ int main(int argc, char *argv[]) {
     MPI_Recv(index, elements_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
     MPI_Recv(&neccessery_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    l_neccessery = (int*)malloc(neccessery_count*sizeof(int));
+    MPI_Recv(l_neccessery, neccessery_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
     if(DEBUG){
-      printf("RCV-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", i, neccessery_count);
+      printf("RCV-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", rank, neccessery_count);
+      printf("RCV-----Process: %d WILL HAVE FIRST NECCESSERY ELEMENT: %d\n",rank, l_neccessery[0] );
     }
     MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
