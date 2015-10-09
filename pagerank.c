@@ -454,7 +454,6 @@ int main(int argc, char *argv[]) {
     }
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-      printf("SUCCESS %d\n",i );
       combine_vector(l_vector, t_vector, size-1);
     }
     my_memcpy(vector,l_vector,size-1);
@@ -474,7 +473,7 @@ int main(int argc, char *argv[]) {
     MPI_Recv(&neccessery_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     l_neccessery = (int*)malloc(neccessery_count*sizeof(int));
     MPI_Recv(l_neccessery, neccessery_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    // neccessery_value = (float*)malloc(neccessery_count*sizeof(int));
+    neccessery_value = (float*)malloc(neccessery_count*sizeof(int));
     // MPI_Recv(neccessery_value, neccessery_count, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     // float neccessery_vector[size-1];
     // for(i = 0 ; i < (size -1 ); i++){
@@ -505,13 +504,12 @@ int main(int argc, char *argv[]) {
       float value = calculate_rank(val, col, row, node_index, vector,1);
       *(l_vector+*(index+i)) = value;
     }
-    printf("%d aaaaaaaaaaaaaa %f\n",rank, *(l_vector));
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
 
   }
 
   MPI_Barrier(MPI_COMM_WORLD);
-  
+
   int iteration = 1;
   int ok = 0;
   while(1 < 3){
