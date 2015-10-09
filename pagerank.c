@@ -329,7 +329,7 @@ int main(int argc, char *argv[]) {
       MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       combine_vector(l_vector, t_vector, size-1);
     }
-    memcpy(vector,l_vector,size-1);
+    memcpy(l_vector,vector,size-1);
     gettimeofday(&t1, NULL);
   }
   else{
@@ -380,9 +380,9 @@ int main(int argc, char *argv[]) {
 
       // printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
-      memcpy(vector,l_vector,size-1);
+      memcpy(l_vector,vector,size-1);
       printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498) );
-      
+
     }
     else{
       MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
