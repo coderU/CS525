@@ -360,9 +360,6 @@ int main(int argc, char *argv[]) {
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
-          if(rank == 0)
-            printf("*********************dasdasdasdasd**********************************\n" );
-
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
       //TODO: SEND ONLY NECCESSERY
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
@@ -383,7 +380,9 @@ int main(int argc, char *argv[]) {
     }
     my_memcpy(vector,l_vector,size-1);
     if(DEBUG){
-      printf("*******************---0---*************************\n" );
+      if(SMALLMATRIX){
+        printf("*******************---0---*************************\n" );
+      }
       print_vector(vector, size-1);
     }
 
