@@ -482,10 +482,12 @@ int main(int argc, char *argv[]) {
     // for( i = 0 ; i < neccessery_count ; i++){
     //   neccessery_vector[*(l_neccessery+i)] = *(neccessery_value+i);
     // }
+
     if(DEBUG){
       printf("RCV-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", rank, neccessery_count);
       printf("RCV-----Process: %d WILL HAVE LAST NECCESSERY ELEMENT: %d\n",rank, l_neccessery[neccessery_count-1] );
     }
+    printf("%d aaaaaaaaaaaaaa\n",rank);
     MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     // if(DEBUG){
@@ -507,7 +509,6 @@ int main(int argc, char *argv[]) {
 
   }
 
-  printf("%d aaaaaaaaaaaaaa\n",rank);
 
   int iteration = 1;
   int ok = 0;
