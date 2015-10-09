@@ -90,6 +90,13 @@ int calculate_diff(float* a, float* b, int size){
   }
   return 1;
 }
+
+void my_memcpy(float* dst, float* src, int size){
+  int i = 0;
+  for( i = 0 ; i < size ; i++){
+    *(dst+i) = *(src+i);
+  }
+}
 int main(int argc, char *argv[]) {
   int numprocs, rank, namelen;
   char processor_name[MPI_MAX_PROCESSOR_NAME];
@@ -385,7 +392,7 @@ int main(int argc, char *argv[]) {
 
       printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
-      memcpy(&vector,&l_vector,size-1);
+      my_memcpy(vector,l_vector,size-1);
       printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
 
       // printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498) );
