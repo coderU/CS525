@@ -356,7 +356,7 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok = 0;
-  while(iteration < 50){
+  while(iteration < 2){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
@@ -381,7 +381,7 @@ int main(int argc, char *argv[]) {
       // printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
       memcpy(vector,l_vector,size-1);
-      printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498) );
+      // printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498) );
 
     }
     else{
