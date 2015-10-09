@@ -498,11 +498,19 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok = 0;
-  while(1){
+  while(iteration < 3){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
         //TODO: SEND ONLY NECCESSERY
+        neccessery_count = *(root_neccessery_count+i);
+        float temp_value[neccessery_count];
+        for(j = 0 ; j < neccessery_count ; j++){
+          temp_value[j] = *(vector+*(*(root_neccessery+i)+j));
+        }
+        MPI_Send(&temp_value, neccessery_count, MPI_FLOAT, i, 0, MPI_COMM_WORLD);
+
+        //***************
         MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
       }
 
@@ -532,7 +540,20 @@ int main(int argc, char *argv[]) {
 
     }
     else{
+      MPI_Recv(neccessery_value, neccessery_count, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      float neccessery_vector[size-1];
+      for(i = 0 ; i < (size -1 ); i++){
+        neccessery_vector[i] = 0;
+      }
+      for( i = 0 ; i < neccessery_count ; i++){
+        neccessery_vector[*(l_neccessery+i)] = *(neccessery_value+i);
+      }
       MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      if(DEBUG){
+        printf("*****************Iteration: %d*****************************\n",iteration );
+        compare_vector(vector, neccessery_vector,size-1,rank);
+        printf("*****************Iteration: %d*****************************\n",iteration );
+      }
       for(i = 0 ; i < size -1 ; i++){
         *(l_vector+i)=0;
       }
