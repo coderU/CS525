@@ -394,7 +394,6 @@ int main(int argc, char *argv[]) {
     root_neccessery_count = (int*)malloc((max+1)*sizeof(int));
     root_neccessery = (int**)malloc((max+1)*sizeof(int*));
     for(i = 1 ; i < (max+1) ; i++){
-      printf("aaaaaaaaaaaaaaaaaaaaaa %d\n",i );
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
       //TODO: SEND ONLY NECCESSERY
@@ -402,6 +401,8 @@ int main(int argc, char *argv[]) {
       for(j = 0 ; j < size -1 ; j++){
         temp_array[j] = 0;
       }
+      printf("aaaaaaaaaaaaaaaaaaaaaa %d\n",i );
+      
       for(j = 0 ; j < *(subgraph_count + i); j++){
         int start = *(row+ *(*(subgraph+i)+j) );
         int end = *(row+*(*(subgraph+i)+j)+1);
