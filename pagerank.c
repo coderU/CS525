@@ -151,7 +151,7 @@ int main(int argc, char *argv[]) {
   if(rank == 0){
     //**************************************************************************
     //READ CRS
-    fp = fopen("./graphs/200K-graph.txt", "r");
+    fp = fopen(*(argv+1), "r");
     if (fp == NULL){
       return 0;
     }
@@ -203,7 +203,7 @@ int main(int argc, char *argv[]) {
     //**************************************************************************
     //READ PARTITION
     len = 0;
-    fp = fopen("./graphs/200K-graph.txt.part.4", "r");
+    fp = fopen(*(argv+2), "r");
     if (fp == NULL){
       return 0;
     }
