@@ -253,7 +253,7 @@ int main(int argc, char *argv[]) {
       *(val+i) = *(val+i)/temp[*(col+i)];
     }
     for( i = 0 ; i < size -1 ; i++){
-      printf("%d\n", temp[i]);
+      printf("Colm %d has %d\n", i, temp[i]);
     }
     //**************************************************************************
     //Seperate NODES
