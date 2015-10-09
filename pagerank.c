@@ -124,7 +124,9 @@ void print_vector(float* a, int size){
 void print_vector_t(float* a, int size){
     int i = 0 ;
     for( i = 0 ; i < size ; i++){
-      printf("%dth node of vector have value: %f\n", i , *(a+i) );
+      if(*(a+i)> 0){
+        printf("%dth node of vector have value: %f\n", i , *(a+i) );        
+      }
     }
 }
 int main(int argc, char *argv[]) {
