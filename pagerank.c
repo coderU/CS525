@@ -504,7 +504,7 @@ int main(int argc, char *argv[]) {
       for(i = 1 ; i < (max+1) ; i++){
         //TODO: SEND ONLY NECCESSERY
         neccessery_count = *(root_neccessery_count+i);
-        printf("Count: %d LAST: %d %f\n",neccessery_count,*(*(root_neccessery+i)+neccessery_count-1),*vector );
+        printf("Count: %d LAST: %d %f\n",neccessery_count,*(*(root_neccessery+i)+neccessery_count-1),*(vector+19659) );
 
         float temp_value[neccessery_count];
         for(j = 0 ; j < neccessery_count ; j++){
