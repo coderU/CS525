@@ -9,7 +9,7 @@
 #endif
 
 #ifndef SMALLMATRIX
-#define SMALLMATRIX 0
+#define SMALLMATRIX 1
 #endif
 
 void sperate_by_space_f(float* array, char* line){
@@ -125,7 +125,7 @@ void print_vector_t(float* a, int size){
     int i = 0 ;
     for( i = 0 ; i < size ; i++){
       if(*(a+i)> 0){
-        printf("%dth node of vector have value: %f\n", i , *(a+i) );        
+        printf("%dth node of vector have value: %f\n", i , *(a+i) );
       }
     }
 }
