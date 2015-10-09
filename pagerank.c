@@ -132,7 +132,8 @@ int main(int argc, char *argv[]) {
   int *subgraph_index;
   struct timeval t1, t2;
   if(argc != 0){
-    printf("%d\n", argc);
+    printf("ARGC %d\n", argc);
+    exit(-1);
   }
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
