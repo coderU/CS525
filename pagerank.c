@@ -269,6 +269,9 @@ int main(int argc, char *argv[]) {
     }
     for(i = 0 ; i < (max+1) ; i++){
       *(subgraph+i)=(int*)malloc(*(subgraph_count)*sizeof(int));
+      for(j = 0 ; j < subgraph_count ; j++){
+        *(*(subgraph+i)+j)=0;
+      }
     }
 
     for(i = 0 ; i < part_count ; i++){
