@@ -332,7 +332,7 @@ int main(int argc, char *argv[]) {
       combine_vector(l_vector, t_vector, size-1);
     }
     memcpy(vector,l_vector,size-1);
-    // printf("After %d iteration vector node: %d has value %f \n", 1, 196498 , *(vector+196498));
+    printf("After %d iteration vector node: %d has value %f \n", 1, 196498 , *(l_vector+196498));
 
     gettimeofday(&t1, NULL);
   }
