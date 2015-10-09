@@ -354,7 +354,7 @@ int main(int argc, char *argv[]) {
   }
   *vector = 1;
   int elements_count;
-  printf("*******************************************************\n" );
+  printf("*********************dasdasdasdasd**********************************\n" );
   if(rank == 0){
     if(DEBUG){
       print_vector(vector, size-1);
