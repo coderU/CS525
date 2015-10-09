@@ -402,8 +402,8 @@ int main(int argc, char *argv[]) {
         temp_array[j] = 0;
       }
       for(j = 0 ; j < *(subgraph_count + i); j++){
-        int start = *(row+ *(*(subgraph)+j) );
-        int end = *(row+*(*(subgraph)+j)+1);
+        int start = *(row+ *(*(subgraph+i)+j) );
+        int end = *(row+*(*(subgraph+i)+j)+1);
         printf("NODE %d has start %d end %d\n",i,start, end );
         for(k = start ; k < end ; k++){
           temp_array[*(col+k)] = 1;
