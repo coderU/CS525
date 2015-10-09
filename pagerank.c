@@ -244,10 +244,10 @@ int main(int argc, char *argv[]) {
 
     int temp[size-1];
     memset(temp, 0, size-1);
-    for(i = 0 ; i < l_val_size - 1 ; i++){
+    for(i = 0 ; i < l_val_size ; i++){
       temp[*(col+i)] = temp[*(col+i)]+1;
     }
-    for(i = 0 ; i < l_val_size - 1 ; i++){
+    for(i = 0 ; i < l_val_size; i++){
       *(val+i) = *(val+i)/temp[*(col+i)];
     }
     for( i = 0 ; i < size -1 ; i++){
