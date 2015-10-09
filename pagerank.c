@@ -504,8 +504,8 @@ int main(int argc, char *argv[]) {
       float value = calculate_rank(val, col, row, node_index, vector,1);
       *(l_vector+*(index+i)) = value;
     }
-    MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     printf("%d aaaaaaaaaaaaaa\n",rank);
+    MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
 
   }
 
