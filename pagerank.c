@@ -338,7 +338,7 @@ int main(int argc, char *argv[]) {
       MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       combine_vector(l_vector, t_vector, size-1);
     }
-    memcpy(vector,l_vector,size-1);
+    my_memcpy(vector,l_vector,size-1);
     printf("After %d iteration vector node: %d has value %f \n", 1, 196498 , *(l_vector+196498));
 
     gettimeofday(&t1, NULL);
@@ -367,7 +367,7 @@ int main(int argc, char *argv[]) {
 
   int iteration = 1;
   int ok = 0;
-  while(iteration < 3){
+  while(1){
     if(rank == 0){
       //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
       for(i = 1 ; i < (max+1) ; i++){
@@ -390,12 +390,8 @@ int main(int argc, char *argv[]) {
         combine_vector(l_vector, t_vector, size-1);
       }
 
-      printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
       my_memcpy(vector,l_vector,size-1);
-      printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
-
-      // printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498) );
 
     }
     else{
@@ -414,9 +410,9 @@ int main(int argc, char *argv[]) {
     iteration++;
     MPI_Barrier(MPI_COMM_WORLD);
 
-    // if(ok){
-    //   break;
-    // }
+    if(ok){
+      break;
+    }
   }
 
   if(rank == 0){
