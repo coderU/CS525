@@ -406,6 +406,8 @@ int main(int argc, char *argv[]) {
         int end = *(row+*(*(subgraph)+j)+1);
         for(k = start ; k < end ; k++){
           temp_array[*(col+k)] = 1;
+          printf("NODE %d MARK %d\n",i, *(col+k));
+
         }
       }
       neccessery_count = 0;
