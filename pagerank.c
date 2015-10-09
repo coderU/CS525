@@ -507,7 +507,7 @@ int main(int argc, char *argv[]) {
 
   }
 
-  printf("aaaaaaaaaaaaaa\n");
+  printf("%d aaaaaaaaaaaaaa\n",rank);
 
   int iteration = 1;
   int ok = 0;
