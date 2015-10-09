@@ -469,7 +469,6 @@ int main(int argc, char *argv[]) {
       }
       print_vector(vector, size-1);
     }
-    gettimeofday(&t1, NULL);
   }
   else{
     MPI_Recv(&elements_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -516,6 +515,9 @@ int main(int argc, char *argv[]) {
   MPI_Barrier(MPI_COMM_WORLD);
   printf("------------------------Start Computing!----------------------------\n" );
 
+  if(rank == 0){
+    gettimeofday(&t1, NULL);
+  }
   int iteration = 1;
   int ok = 0;
   while(1 < 3){
