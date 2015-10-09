@@ -7,6 +7,11 @@
 #ifndef DEBUG
 #define DEBUG 1
 #endif
+
+#ifndef SMALLMATRIX
+#define SMALLMATRIX 1
+#endif
+
 void sperate_by_space_f(float* array, char* line){
   int i=0,j=0, flag = 0;
   char str[10];
@@ -237,6 +242,14 @@ int main(int argc, char *argv[]) {
       *(subgraph_index+index) = *(subgraph_index+index) + 1;
     }
 
+    int temp[size-1];
+    memset(temp, 0, size-1);
+    for(i = 0 ; i < l_val_size - 1 ; i++){
+      temp[*(col+i)]++;
+    }
+    for(i = 0 ; i < l_val_size - 1 ; i++){
+      *(val+i) = *(val+i)/temp[*(col+i)];
+    }
     //**************************************************************************
     //Seperate NODES
     // int final_count[(max+1)];
@@ -338,7 +351,6 @@ int main(int argc, char *argv[]) {
   *vector = 1;
   int elements_count;
   if(rank == 0){
-
     print_vector(vector, size-1);
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
     for(i = 1 ; i < (max+1) ; i++){
