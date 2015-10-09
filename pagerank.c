@@ -361,7 +361,7 @@ int main(int argc, char *argv[]) {
       combine_vector(l_vector, t_vector, size-1);
     }
     my_memcpy(vector,l_vector,size-1);
-    printf("********************************************\n", );
+    printf("********************************************\n" );
     print_vector(vector, size-1);
 
     gettimeofday(&t1, NULL);
