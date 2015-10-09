@@ -406,7 +406,7 @@ int main(int argc, char *argv[]) {
         int start = *(row+ *(*(subgraph+i)+j) );
         int end = *(row+ *(*(subgraph+i)+j) + 1);
         if(i == 7){
-          printf("aaaaaaaaaaaaa %d %d\n", *(subgraph_count + i) , j);
+          printf("aaaaaaaaaaaaa %d %d %d %d\n", *(subgraph_count + i) , j, start, end);
         }
         for(k = start ; k < end ; k++){
           temp_array[*(col+k)] = 1;
