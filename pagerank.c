@@ -487,8 +487,8 @@ int main(int argc, char *argv[]) {
       printf("RCV-----Process: %d ONLY NEED %d ELEMENTS FROM THE VECTOR\n", rank, neccessery_count);
       printf("RCV-----Process: %d WILL HAVE LAST NECCESSERY ELEMENT: %d\n",rank, l_neccessery[neccessery_count-1] );
     }
-    printf("%d aaaaaaaaaaaaaa\n",rank);
     MPI_Recv(&size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    printf("%d aaaaaaaaaaaaaa\n",rank);
     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     // if(DEBUG){
     //   compare_vector(vector, neccessery_vector,size-1,rank);
