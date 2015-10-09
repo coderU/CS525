@@ -510,7 +510,8 @@ int main(int argc, char *argv[]) {
 
   }
 
-
+  MPI_Barrier(MPI_COMM_WORLD);
+  
   int iteration = 1;
   int ok = 0;
   while(1 < 3){
