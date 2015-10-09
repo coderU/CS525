@@ -524,7 +524,7 @@ int main(int argc, char *argv[]) {
         MPI_Send(&temp_value, neccessery_count, MPI_FLOAT, i, 0, MPI_COMM_WORLD);
 
         //***************
-        MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
+        // MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
       }
 
       for(i = 0 ; i < size -1 ; i++){
@@ -561,7 +561,7 @@ int main(int argc, char *argv[]) {
       for( i = 0 ; i < neccessery_count ; i++){
         neccessery_vector[*(l_neccessery+i)] = *(neccessery_value+i);
       }
-      MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      // MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
 
       for( i = 0 ; i < size -1 ; i++){
