@@ -380,7 +380,7 @@ int main(int argc, char *argv[]) {
         combine_vector(l_vector, t_vector, size-1);
       }
 
-      // printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
+      printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
       memcpy(vector,l_vector,size-1);
       // printf("At iteration %d, we have original:%f, current:%f\n", iteration, *(vector+196498), *(l_vector+196498) );
