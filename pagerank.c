@@ -361,7 +361,7 @@ int main(int argc, char *argv[]) {
       combine_vector(l_vector, t_vector, size-1);
     }
     my_memcpy(vector,l_vector,size-1);
-    printf("********************************************\n" );
+    printf("*******************---0---*************************\n" );
     print_vector(vector, size-1);
 
     gettimeofday(&t1, NULL);
@@ -389,54 +389,56 @@ int main(int argc, char *argv[]) {
 
 
   int iteration = 1;
-  // int ok = 0;
-  // while(1){
-  //   if(rank == 0){
-  //     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
-  //     for(i = 1 ; i < (max+1) ; i++){
-  //       //TODO: SEND ONLY NECCESSERY
-  //       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
-  //     }
-  //
-  //     for(i = 0 ; i < size -1 ; i++){
-  //       *(l_vector+i)=0;
-  //     }
-  //
-  //     for( i = 0 ; i < *subgraph_count ; i++){
-  //       int node_index = *(*(subgraph+rank)+i);
-  //       float value = calculate_rank(val, col, row, node_index, vector,0);
-  //       *(l_vector+*(*(subgraph+rank)+i)) = value;
-  //     }
-  //
-  //     for(i = 1 ; i < (max+1) ; i++){
-  //       MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-  //       combine_vector(l_vector, t_vector, size-1);
-  //     }
-  //
-  //     ok = calculate_diff(vector,l_vector, size-1);
-  //     my_memcpy(vector,l_vector,size-1);
-  //
-  //   }
-  //   else{
-  //     MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-  //     for(i = 0 ; i < size -1 ; i++){
-  //       *(l_vector+i)=0;
-  //     }
-  //     for( i = 0 ; i < elements_count ; i++){
-  //       int node_index = *(index+i);
-  //       float value = calculate_rank(val, col, row, node_index, vector,0);
-  //       *(l_vector+*(index+i)) = value;
-  //     }
-  //     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
-  //   }
-  //   MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
-  //   iteration++;
-  //   MPI_Barrier(MPI_COMM_WORLD);
-  //
-  //   if(ok){
-  //     break;
-  //   }
-  // }
+  int ok = 0;
+  while(iteration < 4){
+    if(rank == 0){
+      //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
+      for(i = 1 ; i < (max+1) ; i++){
+        //TODO: SEND ONLY NECCESSERY
+        MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
+      }
+
+      for(i = 0 ; i < size -1 ; i++){
+        *(l_vector+i)=0;
+      }
+
+      for( i = 0 ; i < *subgraph_count ; i++){
+        int node_index = *(*(subgraph+rank)+i);
+        float value = calculate_rank(val, col, row, node_index, vector,0);
+        *(l_vector+*(*(subgraph+rank)+i)) = value;
+      }
+
+      for(i = 1 ; i < (max+1) ; i++){
+        MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        combine_vector(l_vector, t_vector, size-1);
+      }
+
+      ok = calculate_diff(vector,l_vector, size-1);
+      my_memcpy(vector,l_vector,size-1);
+      printf("*******************---%d---*************************\n", iteration);
+      print_vector(vector, size-1);
+
+    }
+    else{
+      MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      for(i = 0 ; i < size -1 ; i++){
+        *(l_vector+i)=0;
+      }
+      for( i = 0 ; i < elements_count ; i++){
+        int node_index = *(index+i);
+        float value = calculate_rank(val, col, row, node_index, vector,0);
+        *(l_vector+*(index+i)) = value;
+      }
+      MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+    }
+    MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    iteration++;
+    MPI_Barrier(MPI_COMM_WORLD);
+
+    if(ok){
+      break;
+    }
+  }
 
   if(rank == 0){
     gettimeofday(&t2, NULL);
