@@ -363,11 +363,10 @@ int main(int argc, char *argv[]) {
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
       //TODO: SEND ONLY NECCESSERY
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
-      MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
-
           if(rank == 0)
             printf("*********************dasdasdasdasd**********************************\n" );
 
+      MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
     }
     for(i = 0 ; i < size -1 ; i++){
       *(l_vector+i)=0;
