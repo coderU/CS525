@@ -555,6 +555,9 @@ int main(int argc, char *argv[]) {
       MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
       vector = neccessery_vector;
+      for( i = 0 ; i < size -1 ; i++){
+        *(vector+i) = neccessery_vector[i];
+      }
       printf("TEST: %f\n", *(vector+616));
       for(i = 0 ; i < size -1 ; i++){
         *(l_vector+i)=0;
