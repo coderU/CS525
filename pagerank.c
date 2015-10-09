@@ -339,8 +339,6 @@ int main(int argc, char *argv[]) {
       combine_vector(l_vector, t_vector, size-1);
     }
     my_memcpy(vector,l_vector,size-1);
-    printf("After %d iteration vector node: %d has value %f \n", 1, 196498 , *(l_vector+196498));
-
     gettimeofday(&t1, NULL);
   }
   else{
@@ -419,7 +417,8 @@ int main(int argc, char *argv[]) {
     gettimeofday(&t2, NULL);
     if(DEBUG){
       for(i = 0 ; i < size-1 ; i++){
-        if(*(vector+i)>0.00001)
+        // if(*(vector+i)>0.00001)
+        if(i == 54)
           printf("After %d iteration vector node: %d has value %f \n", iteration, i , *(vector+i));
       }
     }
