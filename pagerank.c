@@ -250,6 +250,9 @@ int main(int argc, char *argv[]) {
     for(i = 0 ; i < l_val_size - 1 ; i++){
       *(val+i) = *(val+i)/temp[*(col+i)];
     }
+    for( i = 0 ; i < size -1 ; i++){
+      printf("%d\n", temp[i]);
+    }
     //**************************************************************************
     //Seperate NODES
     // int final_count[(max+1)];
