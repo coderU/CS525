@@ -363,10 +363,11 @@ int main(int argc, char *argv[]) {
         //TODO: SEND ONLY NECCESSERY
         MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
       }
+      printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
+
       for(i = 0 ; i < size -1 ; i++){
         *(l_vector+i)=0;
       }
-      printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
 
       for( i = 0 ; i < *subgraph_count ; i++){
         int node_index = *(*(subgraph+rank)+i);
@@ -379,7 +380,7 @@ int main(int argc, char *argv[]) {
       }
       // printf("At iteration %d, we have original:%f, current:%f\n",iteration, *(vector+196498),*(l_vector+196498) );
       ok = calculate_diff(vector,l_vector, size-1);
-      vector = l_vector;
+      memcpy(vector,l_vector,size-1);
     }
     else{
       MPI_Recv(vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
