@@ -420,7 +420,7 @@ int main(int argc, char *argv[]) {
       *(root_neccessery_count+i) = neccessery_count;
       *(root_neccessery+i) = (int*)malloc(neccessery_count*sizeof(int));
       for(j = 0 ; j < neccessery_count ; j++){
-        *(*(root_neccessery+i)+j)=neccessery[j]
+        *(*(root_neccessery+i)+j)=neccessery[j];
       }
       MPI_Send(&neccessery_count, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(&neccessery, neccessery_count, MPI_INT, i, 0, MPI_COMM_WORLD);
