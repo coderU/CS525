@@ -103,9 +103,11 @@ void my_memcpy(float* dst, float* src, int size){
   }
 }
 void print_vector(float* a, int size){
-  int i = 0 ;
-  for( i = 0 ; i < size ; i++){
-    printf("%dth node of vector have value: %f\n", i , *(a+i) );
+  if(SMALLMATRIX){
+    int i = 0 ;
+    for( i = 0 ; i < size ; i++){
+      printf("%dth node of vector have value: %f\n", i , *(a+i) );
+    }
   }
 }
 int main(int argc, char *argv[]) {
@@ -141,7 +143,7 @@ int main(int argc, char *argv[]) {
   if(rank == 0){
     //**************************************************************************
     //READ CRS
-    fp = fopen("./graphs/3-graph.txt", "r");
+    fp = fopen("./graphs/200k-graph.txt", "r");
     if (fp == NULL){
       return 0;
     }
@@ -193,7 +195,7 @@ int main(int argc, char *argv[]) {
     //**************************************************************************
     //READ PARTITION
     len = 0;
-    fp = fopen("./graphs/3-graph.txt.part.3", "r");
+    fp = fopen("./graphs/200k-graph.txt.part.4", "r");
     if (fp == NULL){
       return 0;
     }
@@ -315,7 +317,7 @@ int main(int argc, char *argv[]) {
   // }
   //**************************************************************************
   //CREATE MATRIX
-  if(rank == 0){
+  if(rank == 0 && SMALLMATRIX){
     printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
     matrix = (float**)malloc((size-1)*sizeof(float*));
     for( i = 0 ; i < size - 1; i ++){
@@ -354,7 +356,9 @@ int main(int argc, char *argv[]) {
   *vector = 1;
   int elements_count;
   if(rank == 0){
-    print_vector(vector, size-1);
+    if(DEBUG){
+      print_vector(vector, size-1);
+    }
     //DISTRIBUTE ALL NECCESSERY VECTOR ELEMENTS
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
@@ -376,8 +380,10 @@ int main(int argc, char *argv[]) {
       combine_vector(l_vector, t_vector, size-1);
     }
     my_memcpy(vector,l_vector,size-1);
-    printf("*******************---0---*************************\n" );
-    print_vector(vector, size-1);
+    if(DEBUG){
+      printf("*******************---0---*************************\n" );
+      print_vector(vector, size-1);
+    }
 
     gettimeofday(&t1, NULL);
   }
@@ -430,8 +436,10 @@ int main(int argc, char *argv[]) {
 
       ok = calculate_diff(vector,l_vector, size-1);
       my_memcpy(vector,l_vector,size-1);
-      printf("*******************---%d---*************************\n", iteration);
-      print_vector(vector, size-1);
+      if(DEBUG){
+        printf("*******************---%d---*************************\n", iteration);
+        print_vector(vector, size-1);
+      }
 
     }
     else{
