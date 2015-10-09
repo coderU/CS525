@@ -294,18 +294,25 @@ int main(int argc, char *argv[]) {
   //**************************************************************************
   //CREATE MATRIX
   printf("Initializing %d x %d matrix!\n",size - 1, size -1 );
-  // matrix = (float**)malloc((size-1)*sizeof(float*));
-  // for( i = 0 ; i < size - 1; i ++){
-  //   *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
-  // }
-  //
-  // for(i = 0 ; i < size - 1 ; i++){
-  //   int start = *(row+i);
-  //   int end = *(row+i+1);
-  //   for(j = start ; j < end ; j++){
-  //     *(*(matrix+i)+*(col+j)) = *(val+j);
-  //   }
-  // }
+  matrix = (float**)malloc((size-1)*sizeof(float*));
+  for( i = 0 ; i < size - 1; i ++){
+    *(matrix+i) = (float*)malloc((size-1)*sizeof(float));
+  }
+
+  for(i = 0 ; i < size - 1 ; i++){
+    int start = *(row+i);
+    int end = *(row+i+1);
+    for(j = start ; j < end ; j++){
+      *(*(matrix+i)+*(col+j)) = *(val+j);
+    }
+  }
+
+  for( i = 0 ; i < size -1 ; i++){
+    for( j = 0 ; j < size -1 ; j++){
+      printf("%f ", *(*(matrix+i)+j));
+    }
+    printf("\n" );
+  }
 
   float *vector = (float*)malloc((size-1)*sizeof(float));
   float *t_vector = (float*)malloc((size-1)*sizeof(float));
