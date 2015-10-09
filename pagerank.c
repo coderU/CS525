@@ -507,7 +507,7 @@ int main(int argc, char *argv[]) {
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
 
   }
-
+  printf("------------------------Start Computing!----------------------------\n" );
   MPI_Barrier(MPI_COMM_WORLD);
 
   int iteration = 1;
