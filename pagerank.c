@@ -279,7 +279,6 @@ int main(int argc, char *argv[]) {
       *(*(subgraph+index)+*(subgraph_index+index)) = i;
       *(subgraph_index+index) = *(subgraph_index+index) + 1;
     }
-    printf("aaaaaaaaaaaaaaa\n" );
 
     int temp[size-1];
     for( i = 0 ; i < size -1 ; i++){
@@ -291,6 +290,8 @@ int main(int argc, char *argv[]) {
     for(i = 0 ; i < l_val_size; i++){
       *(val+i) = *(val+i)/temp[*(col+i)];
     }
+    printf("aaaaaaaaaaaaaaa\n" );
+    
     //**************************************************************************
     //Seperate NODES
     // int final_count[(max+1)];
