@@ -287,11 +287,11 @@ int main(int argc, char *argv[]) {
     for(i = 0 ; i < l_val_size ; i++){
       temp[*(col+i)] = temp[*(col+i)]+1;
     }
+    printf("aaaaaaaaaaaaaaa\n" );
     for(i = 0 ; i < l_val_size; i++){
       *(val+i) = *(val+i)/temp[*(col+i)];
     }
-    printf("aaaaaaaaaaaaaaa\n" );
-    
+
     //**************************************************************************
     //Seperate NODES
     // int final_count[(max+1)];
