@@ -281,10 +281,11 @@ int main(int argc, char *argv[]) {
     }
 
     int temp[size-1];
+    printf("aaaaaaaaaaaaaaa\n" );
+    
     for( i = 0 ; i < size -1 ; i++){
       temp[i] = 0;
     }
-    printf("aaaaaaaaaaaaaaa\n" );
     for(i = 0 ; i < l_val_size ; i++){
       temp[*(col+i)] = temp[*(col+i)]+1;
     }
