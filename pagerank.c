@@ -281,8 +281,8 @@ int main(int argc, char *argv[]) {
     }
     printf("aaaaaaaaaaaaaaa\n" );
 
-    int temp[size-1];
-
+    // int temp[size-1];
+    int *temp = (int*)malloc((size-1)*sizeof(int));
     for( i = 0 ; i < size -1 ; i++){
       temp[i] = 0;
     }
