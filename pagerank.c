@@ -595,7 +595,9 @@ int main(int argc, char *argv[]) {
       MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     }
     MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    printf("Interation %d Complete!\n", iteration);
+    if(rank == 0){
+      printf("Interation %d Complete!\n", iteration);
+    }
     iteration++;
     MPI_Barrier(MPI_COMM_WORLD);
     if(ok){
@@ -613,6 +615,8 @@ int main(int argc, char *argv[]) {
       }
     }
     printf("Total Time Cost: %ld secs\n", t2.tv_sec - t1.tv_sec);
+    FILE *f = fopen("pagerank.result", "w");
+    
   }
   MPI_Finalize();
 }
