@@ -273,13 +273,13 @@ int main(int argc, char *argv[]) {
         *(*(subgraph+i)+j)=0;
       }
     }
-    printf("aaaaaaaaaaaaaaa\n" );
 
     for(i = 0 ; i < part_count ; i++){
       int index = *(part+i);
       *(*(subgraph+index)+*(subgraph_index+index)) = i;
       *(subgraph_index+index) = *(subgraph_index+index) + 1;
     }
+    printf("aaaaaaaaaaaaaaa\n" );
 
     int temp[size-1];
     for( i = 0 ; i < size -1 ; i++){
