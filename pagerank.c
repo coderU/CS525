@@ -616,7 +616,17 @@ int main(int argc, char *argv[]) {
     }
     printf("Total Time Cost: %ld secs\n", t2.tv_sec - t1.tv_sec);
     FILE *f = fopen("pagerank.result", "w");
-    
+    if (f == NULL)
+    {
+      printf("Error opening file!\n");
+      exit(1);
+    }
+    fprintf(f, "time: %ld\n",  t2.tv_sec - t1.tv_sec);
+    fprintf(f, "node_id | pagerank\n");
+    for(i = 0 ; i < size-1 ; i++){
+        printf("%d | %f\n", i , *(vector+i));
+    }
+    fclose(f);
   }
   MPI_Finalize();
 }
