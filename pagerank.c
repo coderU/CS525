@@ -279,10 +279,10 @@ int main(int argc, char *argv[]) {
       *(*(subgraph+index)+*(subgraph_index+index)) = i;
       *(subgraph_index+index) = *(subgraph_index+index) + 1;
     }
+    printf("aaaaaaaaaaaaaaa\n" );
 
     int temp[size-1];
-    printf("aaaaaaaaaaaaaaa\n" );
-    
+
     for( i = 0 ; i < size -1 ; i++){
       temp[i] = 0;
     }
