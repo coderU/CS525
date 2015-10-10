@@ -624,7 +624,7 @@ int main(int argc, char *argv[]) {
     fprintf(f, "time: %ld\n",  t2.tv_sec - t1.tv_sec);
     fprintf(f, "node_id | pagerank\n");
     for(i = 0 ; i < size-1 ; i++){
-        printf("%d | %f\n", i , *(vector+i));
+        fprintf(f,"%d | %f\n", i , *(vector+i));
     }
     fclose(f);
   }
