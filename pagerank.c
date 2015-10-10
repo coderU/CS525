@@ -279,7 +279,6 @@ int main(int argc, char *argv[]) {
       *(*(subgraph+index)+*(subgraph_index+index)) = i;
       *(subgraph_index+index) = *(subgraph_index+index) + 1;
     }
-    printf("aaaaaaaaaaaaaaa\n" );
 
     // int temp[size-1];
     int *temp = (int*)malloc((size-1)*sizeof(int));
@@ -403,7 +402,8 @@ int main(int argc, char *argv[]) {
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
       //TODO: SEND ONLY NECCESSERY
-      int temp_array[size - 1];
+      // int temp_array[size - 1];
+      int *temp_array = (int*)malloc((size-1)*sizeof(int));
       for(j = 0 ; j < size -1 ; j++){
         temp_array[j] = 0;
       }
@@ -424,7 +424,8 @@ int main(int argc, char *argv[]) {
         }
       }
 
-      int neccessery[neccessery_count];
+      // int neccessery[neccessery_count];
+      int* neccessery = (int*)malloc(neccessery_count*sizeof(neccessery_count));
       int neccessery_index = 0;
       for( j = 0 ; j < size -1 ; j++){
         if(temp_array[j] != 0){
@@ -530,7 +531,8 @@ int main(int argc, char *argv[]) {
         //TODO: SEND ONLY NECCESSERY
         neccessery_count = *(root_neccessery_count+i);
 
-        float temp_value[neccessery_count];
+        // float temp_value[neccessery_count];
+        float *temp_value = (float*)malloc(neccessery_count*sizeof(float));
         for(j = 0 ; j < neccessery_count ; j++){
           temp_value[j] = *(vector+*(*(root_neccessery+i)+j));
         }
@@ -567,7 +569,8 @@ int main(int argc, char *argv[]) {
     }
     else{
       MPI_Recv(neccessery_value, neccessery_count, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-      float neccessery_vector[size-1];
+      // float neccessery_vector[size-1];
+      float *neccessery_vector = (float*)malloc((size-1)*sizeof(float));
       for(i = 0 ; i < (size -1 ); i++){
         neccessery_vector[i] = 0;
       }
