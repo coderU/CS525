@@ -267,6 +267,7 @@ int main(int argc, char *argv[]) {
     for(i = 0 ; i < (max+1) ; i++){
       printf("Node %d has: %d elements\n",i, *(subgraph_count+i) );
     }
+    printf("aaaaaaaaaaaaaaa\n" );
     for(i = 0 ; i < (max+1) ; i++){
       *(subgraph+i)=(int*)malloc(*(subgraph_count+i)*sizeof(int));
       for(j = 0 ; j < *(subgraph_count+i) ; j++){
