@@ -424,8 +424,8 @@ int main(int argc, char *argv[]) {
         }
       }
 
-      // int neccessery[neccessery_count];
-      int* neccessery = (int*)malloc(neccessery_count*sizeof(neccessery_count));
+      int neccessery[neccessery_count];
+      // int* neccessery = (int*)malloc(neccessery_count*sizeof(neccessery_count));
       int neccessery_index = 0;
       for( j = 0 ; j < size -1 ; j++){
         if(temp_array[j] != 0){
@@ -531,8 +531,8 @@ int main(int argc, char *argv[]) {
         //TODO: SEND ONLY NECCESSERY
         neccessery_count = *(root_neccessery_count+i);
 
-        // float temp_value[neccessery_count];
-        float *temp_value = (float*)malloc(neccessery_count*sizeof(float));
+        float temp_value[neccessery_count];
+        // float *temp_value = (float*)malloc(neccessery_count*sizeof(float));
         for(j = 0 ; j < neccessery_count ; j++){
           temp_value[j] = *(vector+*(*(root_neccessery+i)+j));
         }
