@@ -403,7 +403,7 @@ int main(int argc, char *argv[]) {
     root_neccessery = (int**)malloc((max+1)*sizeof(int*));
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
-      fprintf(stderr, "aaaa\n");
+      fprintf(stderr, "aaaa %d\n", i);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
 
       //TODO: SEND ONLY NECCESSERY
