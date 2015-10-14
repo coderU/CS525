@@ -454,7 +454,7 @@ int main(int argc, char *argv[]) {
 
       //********************************
       MPI_Send((subgraph_count+i), 1 ,MPI_INT, i , 0 , MPI_COMM_WORLD);
-      MPI_Send( (subgraph+i), *(subgraph_count+i) ,MPI_INT, i , 0 , MPI_COMM_WORLD);
+      MPI_Send( *(subgraph+i), *(subgraph_count+i) ,MPI_INT, i , 0 , MPI_COMM_WORLD);
 
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
