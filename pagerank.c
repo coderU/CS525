@@ -402,7 +402,6 @@ int main(int argc, char *argv[]) {
     root_neccessery_count = (int*)malloc((max+1)*sizeof(int));
     root_neccessery = (int**)malloc((max+1)*sizeof(int*));
     for(i = 1 ; i < (max+1) ; i++){
-      fprintf(stderr, "aaaa %d\n", i);
       MPI_Send((subgraph_count+i), 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(*(subgraph+i), *(subgraph_count+i), MPI_INT, i, 0, MPI_COMM_WORLD);
 
@@ -474,9 +473,9 @@ int main(int argc, char *argv[]) {
 
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
       float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
       MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
       float* temp_vector = (float*)malloc((size-1)*sizeof(float));
       for( j = 0 ; j < (size-1) ; j++){
         *(temp_vector+j) = 0;
@@ -484,6 +483,7 @@ int main(int argc, char *argv[]) {
       for( j = 0 ; j < *(subgraph_count+i) ; j++){
         *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
       }
+
       compare_vector(temp_vector, t_vector,*(subgraph_count+i),i);
       combine_vector(l_vector, t_vector, size-1);
     }
@@ -541,8 +541,8 @@ int main(int argc, char *argv[]) {
       // fprintf(stderr, "a: %d\n", *(index+i));
     }
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+
     for( i = 0 ; i < local_subgraph_count ; i++){
-      // fprintf(stderr, "b: %d/%d %d\n", i,(local_subgraph_count), *(local_subgraph+i));
       *(local_subgraph_vector+i) = *(l_vector+*(local_subgraph+i));
     }
     MPI_Send(local_subgraph_vector, (local_subgraph_count), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
@@ -585,6 +585,17 @@ int main(int argc, char *argv[]) {
 
       for(i = 1 ; i < (max+1) ; i++){
         MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+        float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
+        MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        float* temp_vector = (float*)malloc((size-1)*sizeof(float));
+        for( j = 0 ; j < (size-1) ; j++){
+          *(temp_vector+j) = 0;
+        }
+        for( j = 0 ; j < *(subgraph_count+i) ; j++){
+          *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
+        }
+
         combine_vector(l_vector, t_vector, size-1);
       }
 
@@ -624,6 +635,10 @@ int main(int argc, char *argv[]) {
         *(l_vector+*(index+i)) = value;
       }
       MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+      for( i = 0 ; i < local_subgraph_count ; i++){
+        *(local_subgraph_vector+i) = *(l_vector+*(local_subgraph+i));
+      }
+      MPI_Send(local_subgraph_vector, (local_subgraph_count), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     }
     MPI_Bcast(&ok, 1, MPI_INT, 0, MPI_COMM_WORLD);
     if(rank == 0){
