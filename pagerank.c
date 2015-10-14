@@ -493,7 +493,7 @@ int main(int argc, char *argv[]) {
     neccessery_value = (float*)malloc(neccessery_count*sizeof(int));
     MPI_Recv(&local_subgraph_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     local_subgraph = (int*)malloc(local_subgraph_count*sizeof(int));
-    local_subgraph_vector = (int*)malloc(local_subgraph_count*sizeof(int));
+    local_subgraph_vector = (float*)malloc(local_subgraph_count*sizeof(int));
     MPI_Recv(local_subgraph, local_subgraph_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     // fprintf(stderr, "aaaa\n" );
     // MPI_Recv(neccessery_value, neccessery_count, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
