@@ -529,7 +529,7 @@ int main(int argc, char *argv[]) {
     }
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     for( i = 0 ; i < local_subgraph_count ; i++){
-      fprintf(stderr, "b: %d\n", *(local_subgraph+i));
+      fprintf(stderr, "b: %d %d\n", i, *(local_subgraph+i));
       *(local_subgraph_vector+i) = *(l_vector+*(local_subgraph+i));
     }
 
