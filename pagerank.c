@@ -453,10 +453,10 @@ int main(int argc, char *argv[]) {
 
       //********************************
       MPI_Send((subgraph_count+i), 1 ,MPI_INT, i , 0 , MPI_COMM_WORLD);
+      MPI_Send( (subgraph+i), *(subgraph_count+i) ,MPI_INT, i , 0 , MPI_COMM_WORLD);
 
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
-      // MPI_Send( (subgraph+i), *(subgraph_count+i) ,MPI_INT, i , 0 , MPI_COMM_WORLD);
     }
     for(i = 0 ; i < size -1 ; i++){
       *(l_vector+i)=0;
@@ -491,8 +491,8 @@ int main(int argc, char *argv[]) {
     MPI_Recv(l_neccessery, neccessery_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     neccessery_value = (float*)malloc(neccessery_count*sizeof(int));
     MPI_Recv(&local_subgraph_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    // local_subgraph = (int*)malloc(local_subgraph_count*sizeof(int));
-    // MPI_Recv(local_subgraph, local_subgraph_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    local_subgraph = (int*)malloc(local_subgraph_count*sizeof(int));
+    MPI_Recv(local_subgraph, local_subgraph_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     // fprintf(stderr, "aaaa\n" );
     // MPI_Recv(neccessery_value, neccessery_count, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     // float neccessery_vector[size-1];
