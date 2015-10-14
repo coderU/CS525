@@ -615,35 +615,28 @@ int main(int argc, char *argv[]) {
       for(i = 1 ; i < (max+1) ; i++){
         // MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-        // float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
-        // MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        // float* temp_vector = (float*)malloc((size-1)*sizeof(float));
-        // for( j = 0 ; j < (size-1) ; j++){
-        //   *(temp_vector+j) = 0;
-        // }
-        // for( j = 0 ; j < *(subgraph_count+i) ; j++){
-        //   *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
-        // }
-        // free(origin);
-        // t_vector = temp_vector;
-        // combine_vector(l_vector, t_vector, size-1);
-        // free(temp_vector);
-        pthread_t inc_x_thread;
-        if(pthread_create(&inc_x_thread, NULL, combine_vector_multi, &i)) {
-
-          fprintf(stderr, "Error creating thread\n");
-          return 1;
-
+        float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
+        MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        float* temp_vector = (float*)malloc((size-1)*sizeof(float));
+        for( j = 0 ; j < (size-1) ; j++){
+          *(temp_vector+j) = 0;
         }
+        for( j = 0 ; j < *(subgraph_count+i) ; j++){
+          *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
+        }
+        free(origin);
+        t_vector = temp_vector;
+        combine_vector(l_vector, t_vector, size-1);
+        free(temp_vector);
+        // pthread_t inc_x_thread;
+        // if(pthread_create(&inc_x_thread, NULL, combine_vector_multi, &i)) {
+        //
+        //   fprintf(stderr, "Error creating thread\n");
+        //   return 1;
+        //
+        // }
       }
 
-
-      // if(pthread_join(inc_x_thread, NULL)) {
-      //
-      //   fprintf(stderr, "Error joining thread\n");
-      //   return 2;
-      //
-      // }
       ok = calculate_diff(vector,l_vector, size-1);
       my_memcpy(vector,l_vector,size-1);
       if(DEBUG){

@@ -1,5 +1,5 @@
 pagerank: pagerank.c
-	mpicc pagerank.c -lpthread -o pagerank
+	mpicc pagerank.c -o pagerank
 
 clean:
 	rm pagerank
