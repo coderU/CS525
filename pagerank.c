@@ -584,7 +584,7 @@ int main(int argc, char *argv[]) {
       }
 
       for(i = 1 ; i < (max+1) ; i++){
-        MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        // MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
         float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
         MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -595,7 +595,7 @@ int main(int argc, char *argv[]) {
         for( j = 0 ; j < *(subgraph_count+i) ; j++){
           *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
         }
-
+        t_vector = temp_vector;
         combine_vector(l_vector, t_vector, size-1);
       }
 
@@ -634,7 +634,9 @@ int main(int argc, char *argv[]) {
         float value = calculate_rank(val, col, row, node_index, vector,0);
         *(l_vector+*(index+i)) = value;
       }
-      MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+
+      // MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
+
       for( i = 0 ; i < local_subgraph_count ; i++){
         *(local_subgraph_vector+i) = *(l_vector+*(local_subgraph+i));
       }
