@@ -536,11 +536,11 @@ int main(int argc, char *argv[]) {
       int node_index = *(index+i);
       float value = calculate_rank(val, col, row, node_index, vector,1);
       *(l_vector+*(index+i)) = value;
-      fprintf(stderr, "a: %d\n", *(index+i));
+      // fprintf(stderr, "a: %d\n", *(index+i));
     }
     MPI_Send(l_vector, (size-1), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
     for( i = 0 ; i < local_subgraph_count ; i++){
-      fprintf(stderr, "b: %d/%d %d\n", i,(local_subgraph_count), *(local_subgraph+i));
+      // fprintf(stderr, "b: %d/%d %d\n", i,(local_subgraph_count), *(local_subgraph+i));
       *(local_subgraph_vector+i) = *(l_vector+*(local_subgraph+i));
     }
     MPI_Send(local_subgraph_vector, (local_subgraph_count), MPI_FLOAT, 0, 0, MPI_COMM_WORLD);
