@@ -156,6 +156,8 @@ int main(int argc, char *argv[]) {
   int* root_neccessery_count;
   int** root_neccessery;
   float *neccessery_value;
+  int local_subgraph_count = 0;
+  int* local_subgraph;
   if(argc != 3){
     printf("USAGE: mpirun -machinefile machines -np *Number of partition* pagerank *graph-file* *graph-partition-file*\n");
     if(DEBUG){
@@ -452,6 +454,8 @@ int main(int argc, char *argv[]) {
       //********************************
       MPI_Send(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
       MPI_Send(vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD);
+      MPI_Send((subgraph_count+i), 1 ,MPI_INT, i , 0 , MPI_COMM_WORLD);
+      MPI_Send( (subgraph+i), *(subgraph_count+i) ,MPI_INT, i , 0 , MPI_COMM_WORLD);
     }
     for(i = 0 ; i < size -1 ; i++){
       *(l_vector+i)=0;
@@ -462,6 +466,8 @@ int main(int argc, char *argv[]) {
       float value = calculate_rank(val, col, row, node_index, vector,1);
       *(l_vector+*(*(subgraph+rank)+i)) = value;
     }
+
+
     for(i = 1 ; i < (max+1) ; i++){
       MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       combine_vector(l_vector, t_vector, size-1);
@@ -483,6 +489,10 @@ int main(int argc, char *argv[]) {
     l_neccessery = (int*)malloc(neccessery_count*sizeof(int));
     MPI_Recv(l_neccessery, neccessery_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     neccessery_value = (float*)malloc(neccessery_count*sizeof(int));
+    MPI_Recv(&local_subgraph_count, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    local_subgraph = (int*)malloc(local_subgraph_count*sizeof(int));
+    MPI_Recv(local_subgraph, local_subgraph_count, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
     // MPI_Recv(neccessery_value, neccessery_count, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     // float neccessery_vector[size-1];
     // for(i = 0 ; i < (size -1 ); i++){
