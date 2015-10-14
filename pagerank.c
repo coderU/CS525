@@ -18,27 +18,6 @@ int *subgraph_count;
 int **subgraph;
 int size;
 
-void *combine_vector_multi(void *x_void_ptr)
-{
-
-/* increment x to 100 */
-float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
-MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-float* temp_vector = (float*)malloc((size-1)*sizeof(float));
-for( j = 0 ; j < (size-1) ; j++){
-  *(temp_vector+j) = 0;
-}
-for( j = 0 ; j < *(subgraph_count+i) ; j++){
-  *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
-}
-free(origin);
-combine_vector(l_vector, temp_vector, size-1);
-free(temp_vector);
-
-/* the function must return something - NULL will do */
-return NULL;
-
-}
 
 void sperate_by_space_f(float* array, char* line){
   int i=0,j=0, flag = 0;
@@ -123,6 +102,31 @@ void combine_vector(float* a, float* b, int size){
     *(a+i) = *(a+i)+*(b+i);
   }
 }
+
+void *combine_vector_multi(void *x_void_ptr)
+{
+  int j;
+  int i = 0;
+  i = *(int *)x_void_ptr;
+  /* increment x to 100 */
+  float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
+  MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+  float* temp_vector = (float*)malloc((size-1)*sizeof(float));
+  for( j = 0 ; j < (size-1) ; j++){
+    *(temp_vector+j) = 0;
+  }
+  for( j = 0 ; j < *(subgraph_count+i) ; j++){
+    *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
+  }
+  free(origin);
+  combine_vector(l_vector, temp_vector, size-1);
+  free(temp_vector);
+
+  /* the function must return something - NULL will do */
+  return NULL;
+
+}
+
 
 int calculate_diff(float* a, float* b, int size){
   int i = 0;
@@ -611,21 +615,35 @@ int main(int argc, char *argv[]) {
       for(i = 1 ; i < (max+1) ; i++){
         // MPI_Recv(t_vector, (size-1), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-        float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
-        MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        float* temp_vector = (float*)malloc((size-1)*sizeof(float));
-        for( j = 0 ; j < (size-1) ; j++){
-          *(temp_vector+j) = 0;
+        // float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
+        // MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        // float* temp_vector = (float*)malloc((size-1)*sizeof(float));
+        // for( j = 0 ; j < (size-1) ; j++){
+        //   *(temp_vector+j) = 0;
+        // }
+        // for( j = 0 ; j < *(subgraph_count+i) ; j++){
+        //   *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
+        // }
+        // free(origin);
+        // t_vector = temp_vector;
+        // combine_vector(l_vector, t_vector, size-1);
+        // free(temp_vector);
+        pthread_t inc_x_thread;
+        if(pthread_create(&inc_x_thread, NULL, combine_vector_multi, &i)) {
+
+          fprintf(stderr, "Error creating thread\n");
+          return 1;
+
         }
-        for( j = 0 ; j < *(subgraph_count+i) ; j++){
-          *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
-        }
-        free(origin);
-        t_vector = temp_vector;
-        combine_vector(l_vector, t_vector, size-1);
-        free(temp_vector);
       }
 
+
+      // if(pthread_join(inc_x_thread, NULL)) {
+      //
+      //   fprintf(stderr, "Error joining thread\n");
+      //   return 2;
+      //
+      // }
       ok = calculate_diff(vector,l_vector, size-1);
       my_memcpy(vector,l_vector,size-1);
       if(DEBUG){
