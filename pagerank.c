@@ -595,8 +595,10 @@ int main(int argc, char *argv[]) {
         for( j = 0 ; j < *(subgraph_count+i) ; j++){
           *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
         }
+        free(origin);
         t_vector = temp_vector;
         combine_vector(l_vector, t_vector, size-1);
+        free(temp_vector);
       }
 
       ok = calculate_diff(vector,l_vector, size-1);
