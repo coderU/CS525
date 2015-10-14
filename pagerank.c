@@ -3,6 +3,7 @@
 #include <mpi.h>
 #include <string.h>
 #include <sys/time.h>
+#include <pthread.h>
 
 #ifndef DEBUG
 #define DEBUG 1
@@ -11,6 +12,33 @@
 #ifndef SMALLMATRIX
 #define SMALLMATRIX 0
 #endif
+
+float *l_vector;
+int *subgraph_count;
+int **subgraph;
+int size;
+
+void *combine_vector_multi(void *x_void_ptr)
+{
+
+/* increment x to 100 */
+float* origin = (float*)malloc(*(subgraph_count+i)*sizeof(float));
+MPI_Recv(origin, *(subgraph_count+i), MPI_FLOAT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+float* temp_vector = (float*)malloc((size-1)*sizeof(float));
+for( j = 0 ; j < (size-1) ; j++){
+  *(temp_vector+j) = 0;
+}
+for( j = 0 ; j < *(subgraph_count+i) ; j++){
+  *(temp_vector+*(*(subgraph+i)+j)) = *(origin+j);
+}
+free(origin);
+combine_vector(l_vector, temp_vector, size-1);
+free(temp_vector);
+
+/* the function must return something - NULL will do */
+return NULL;
+
+}
 
 void sperate_by_space_f(float* array, char* line){
   int i=0,j=0, flag = 0;
@@ -141,13 +169,10 @@ int main(int argc, char *argv[]) {
   int *row;
   int *part;
   int max = 0;
-  int size;
   int l_size;
   int l_val_size;
   int i, j, k;
   int part_count = 0;
-  int *subgraph_count;
-  int **subgraph;
   int *subgraph_index;
   float* send;
   struct timeval t1, t2;
@@ -386,7 +411,7 @@ int main(int argc, char *argv[]) {
 
   float *vector = (float*)malloc((size-1)*sizeof(float));
   float *t_vector = (float*)malloc((size-1)*sizeof(float));
-  float *l_vector = (float*)malloc((size-1)*sizeof(float));
+  l_vector = (float*)malloc((size-1)*sizeof(float));
 
   int* index;
   for(i = 0 ; i < size-1; i++){
